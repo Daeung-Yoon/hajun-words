@@ -6,7 +6,7 @@ import { createRange, listRanges, setCurrentRange } from '../store/ranges'
 import type { RangeRecord } from '../store/db'
 
 export default function Range() {
-  const { bank, range, refreshRange } = useApp()
+  const { bank, banks, range, refreshRange, selectBank } = useApp()
   const navigate = useNavigate()
   const days = useMemo(() => (bank ? daysOf(bank) : []), [bank])
   const maxNo = bank ? Math.max(...bank.words.map((w) => w.no)) : 1
@@ -27,6 +27,7 @@ export default function Range() {
   const endDay = days.find((d) => d.to === to)?.label ?? ''
   const valid = from >= 1 && to <= maxNo && from <= to
   const count = bank.words.filter((w) => w.no >= from && w.no <= to).length
+  const bankRecent = recent.filter((r) => r.bankId === bank.id)
 
   const save = async () => {
     await createRange({ bankId: bank.id, from, to, name: rangeName(bank, from, to, new Date()) })
@@ -42,6 +43,11 @@ export default function Range() {
   return (
     <main className="page stack">
       <div className="topbar"><Link to="/">← 홈</Link><span>범위 선택</span><span /></div>
+      {banks.length > 1 && (
+        <select className="input" aria-label="단어장" value={bank.id} onChange={(e) => { void selectBank(e.target.value) }}>
+          {banks.map((b) => <option key={b.id} value={b.id}>{b.title}</option>)}
+        </select>
+      )}
       <section className="card stack">
         <h2 style={{ marginTop: 0 }}>Day로 고르기</h2>
         <div className="row">
@@ -70,10 +76,10 @@ export default function Range() {
         <p className="muted">{valid ? `${count}단어 · ${rangeName(bank, from, to, new Date())}` : '범위를 확인해 주세요'}</p>
         <button className="btn btn-primary btn-block" disabled={!valid} onClick={save}>이 범위로 공부하기</button>
       </section>
-      {recent.length > 0 && (
+      {bankRecent.length > 0 && (
         <section className="stack">
           <h2>최근 범위</h2>
-          {recent.map((r) => (
+          {bankRecent.map((r) => (
             <button key={r.id} className="btn btn-block" style={{ justifyContent: 'space-between' }} onClick={() => pick(r)}>
               <span>{r.name}</span><span className="muted">{r.from}~{r.to}</span>
             </button>

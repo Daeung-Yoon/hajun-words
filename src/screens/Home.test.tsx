@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router'
 import { AppContext, type AppValue } from '../app/AppContext'
 import Home from './Home'
 
-const base: AppValue = { status: 'ready', error: null, bank: { id: 'b', title: 'B', words: [] }, range: null, rangeWords: [], refreshRange: async () => {} }
+const base: AppValue = { status: 'ready', error: null, bank: { id: 'b', title: 'B', words: [] }, range: null, rangeWords: [], refreshRange: async () => {}, banks: [], bankErrors: [], selectBank: async () => {} }
 
 const renderHome = (v: Partial<AppValue>) =>
   render(<MemoryRouter><AppContext.Provider value={{ ...base, ...v }}><Home /></AppContext.Provider></MemoryRouter>)
@@ -25,5 +25,10 @@ describe('Home', () => {
   it('shows the error screen', () => {
     renderHome({ status: 'error', error: 'banks/sample.json: 문제' })
     expect(screen.getByText(/아빠에게 알려주세요/)).toBeInTheDocument()
+  })
+  it('lists banks that failed to load while staying usable', () => {
+    renderHome({ bankErrors: ['banks/bad.json: 문제'] })
+    expect(screen.getByText(/banks\/bad.json: 문제.*아빠에게 알려주세요/)).toBeInTheDocument()
+    expect(screen.getByText('범위를 골라 주세요')).toBeInTheDocument()
   })
 })

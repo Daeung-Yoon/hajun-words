@@ -5,7 +5,7 @@ import { AppContext, type AppValue } from '../app/AppContext'
 import type { Word } from '../content/schema'
 import Tree from './Tree'
 
-const base: AppValue = { status: 'ready', error: null, bank: { id: 'b', title: 'B', words: [] }, range: null, rangeWords: [], refreshRange: async () => {} }
+const base: AppValue = { status: 'ready', error: null, bank: { id: 'b', title: 'B', words: [] }, range: null, rangeWords: [], refreshRange: async () => {}, banks: [], bankErrors: [], selectBank: async () => {} }
 const mk = (id: string, no: number): Word => ({ id, no, source: 'Day 1', word: id, pos: '', ipa: '', core: { ko: '', en: '' }, senses: [], koGenerated: false, image: null, etymology: null })
 
 const ui = (rangeWords: Word[]) => (

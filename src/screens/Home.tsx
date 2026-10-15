@@ -14,7 +14,7 @@ const MODES = [
 ]
 
 export default function Home() {
-  const { status, error, range, rangeWords } = useApp()
+  const { status, error, bankErrors, range, rangeWords } = useApp()
   const [levels, setLevels] = useState<Record<Level, number>>({ 0: 0, 1: 0, 2: 0, 3: 0 })
   const [streak, setStreak] = useState(0)
   const [today, setToday] = useState(0)
@@ -51,6 +51,9 @@ export default function Home() {
   return (
     <main className="page stack">
       <h1>하준 영어단어</h1>
+      {bankErrors.length > 0 && (
+        <p className="danger">일부 단어장을 불러오지 못했어요: {bankErrors.join(' / ')} 아빠에게 알려주세요.</p>
+      )}
       <Link to="/range" className="card stack" style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
         {hasRange && range ? (
           <>

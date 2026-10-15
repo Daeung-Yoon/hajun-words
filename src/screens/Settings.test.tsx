@@ -8,16 +8,18 @@ import { resetProgress } from '../store/progress'
 import { createRange, listRanges, getSetting, setAcademyScore } from '../store/ranges'
 import { exportAll } from '../store/exportImport'
 
-const value: AppValue = { status: 'ready', error: null, bank: { id: 'b', title: 'B', words: [] }, range: null, rangeWords: [], refreshRange: async () => {} }
+const value: AppValue = { status: 'ready', error: null, bank: { id: 'b', title: 'B', words: [] }, range: null, rangeWords: [], refreshRange: async () => {}, banks: [], bankErrors: [], selectBank: async () => {} }
 const renderIt = () => render(<MemoryRouter><AppContext.Provider value={value}><Settings /></AppContext.Provider></MemoryRouter>)
 
 beforeEach(async () => { await resetProgress() })
 
 describe('Settings', () => {
   it('saves academy score for a range', async () => {
+    await createRange({ bankId: 'other', from: 1, to: 2, name: 'r0' }, 1000)
     await createRange({ bankId: 'b', from: 1, to: 2, name: 'r1' })
     renderIt()
     const input = await screen.findByLabelText('r1 학원 점수')
+    expect(screen.queryByLabelText('r0 학원 점수')).not.toBeInTheDocument()
     await userEvent.type(input, '85')
     await userEvent.tab()
     await waitFor(async () => expect((await listRanges())[0].academyScore).toBe(85))

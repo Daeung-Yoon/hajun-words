@@ -7,16 +7,16 @@ import { resetProgress } from '../store/progress'
 import type { RangeRecord } from '../store/db'
 
 export default function Settings() {
-  const { refreshRange } = useApp()
+  const { bank, refreshRange } = useApp()
   const [ranges, setRanges] = useState<RangeRecord[]>([])
   const [typing, setTyping] = useState(false)
   const [msg, setMsg] = useState<string | null>(null)
 
   const reload = async () => {
-    setRanges(await listRanges())
+    setRanges((await listRanges()).filter((r) => r.bankId === bank?.id))
     setTyping((await getSetting<'choice' | 'typing'>('blankInputMode', 'choice')) === 'typing')
   }
-  useEffect(() => { void reload() }, [])
+  useEffect(() => { void reload() }, [bank])
 
   const saveScore = async (r: RangeRecord, raw: string) => {
     const n = raw.trim() === '' ? null : Number(raw)

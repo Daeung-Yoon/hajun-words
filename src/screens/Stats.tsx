@@ -9,15 +9,15 @@ import type { RangeRecord } from '../store/db'
 const LEVEL_LABEL = ['모름', '본 적 있음', '익숙', '확실']
 
 export default function Stats() {
-  const { rangeWords } = useApp()
+  const { bank, rangeWords } = useApp()
   const [states, setStates] = useState<Map<string, WordState>>(new Map())
   const [ranges, setRanges] = useState<RangeRecord[]>([])
   const [onlyUnknown, setOnlyUnknown] = useState(false)
 
   useEffect(() => {
     void getStates(rangeWords.map((w) => w.id)).then(setStates)
-    void listRanges().then(setRanges)
-  }, [rangeWords])
+    void listRanges().then((rs) => setRanges(rs.filter((r) => r.bankId === bank?.id)))
+  }, [rangeWords, bank])
 
   const now = Date.now()
   const rows = rangeWords.filter((w) => !onlyUnknown || (states.get(w.id)?.level ?? 0) === 0)

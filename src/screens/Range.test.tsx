@@ -1,11 +1,11 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Routes, Route } from 'react-router'
 import { AppContext, type AppValue } from '../app/AppContext'
 import Range from './Range'
 import { resetProgress } from '../store/progress'
-import { getCurrentRange } from '../store/ranges'
+import { createRange, getCurrentRange } from '../store/ranges'
 import type { Bank } from '../content/schema'
 
 const w = (id: string, no: number, source: string) => ({
@@ -13,7 +13,7 @@ const w = (id: string, no: number, source: string) => ({
   senses: [{ ko: 'k', en: 'e', bridge: '', example: 'a x b', blank: 'a ____ b' }], koGenerated: false, image: null, etymology: null,
 })
 const bank: Bank = { id: 'b', title: 'B', words: [w('a', 1, 'Day 1'), w('b', 2, 'Day 1'), w('c', 3, 'Day 2'), w('d', 4, 'Day 2')] }
-const value: AppValue = { status: 'ready', error: null, bank, range: null, rangeWords: [], refreshRange: async () => {} }
+const value: AppValue = { status: 'ready', error: null, bank, range: null, rangeWords: [], refreshRange: async () => {}, banks: [], bankErrors: [], selectBank: async () => {} }
 
 beforeEach(async () => { await resetProgress() })
 
@@ -49,5 +49,24 @@ describe('Range', () => {
     rerender(ui({ ...value, range: { id: 1, name: 'r', bankId: 'b', from: 3, to: 4, createdAt: 0, mockBest: null, academyScore: null } }))
     await waitFor(() => expect(screen.getByLabelText('시작 번호')).toHaveValue(3))
     expect(screen.getByLabelText('끝 번호')).toHaveValue(4)
+  })
+
+  it('shows a bank selector and only recent ranges of that bank', async () => {
+    await createRange({ bankId: 'b', from: 1, to: 2, name: 'mine' })
+    await createRange({ bankId: 'other', from: 1, to: 1, name: 'theirs' })
+    const other: Bank = { id: 'other', title: '다른 단어장', words: [w('z', 1, 'Day 1')] }
+    const selectBank = vi.fn(async () => {})
+    render(
+      <MemoryRouter initialEntries={['/range']}>
+        <AppContext.Provider value={{ ...value, banks: [bank, other], selectBank }}>
+          <Routes><Route path="/range" element={<Range />} /></Routes>
+        </AppContext.Provider>
+      </MemoryRouter>,
+    )
+    expect(await screen.findByText('mine')).toBeInTheDocument()
+    expect(screen.queryByText('theirs')).not.toBeInTheDocument()
+    expect(screen.getByLabelText('단어장')).toHaveValue('b')
+    await userEvent.selectOptions(screen.getByLabelText('단어장'), 'other')
+    expect(selectBank).toHaveBeenCalledWith('other')
   })
 })
