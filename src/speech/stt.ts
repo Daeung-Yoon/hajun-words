@@ -5,6 +5,13 @@ interface RecognitionLike {
   interimResults: boolean
   maxAlternatives: number
   continuous?: boolean
+  onstart?: (() => void) | null
+  onaudiostart?: (() => void) | null
+  onsoundstart?: (() => void) | null
+  onspeechstart?: (() => void) | null
+  onspeechend?: (() => void) | null
+  onsoundend?: (() => void) | null
+  onaudioend?: (() => void) | null
   onresult: ((e: RecognitionEventLike) => void) | null
   onnomatch?: (() => void) | null
   onend: (() => void) | null
@@ -41,7 +48,8 @@ export function describeListenError(code: string): string {
     case 'not-allowed':
     case 'service-not-allowed': return '마이크 권한을 허용해 주세요. 주소창 옆 자물쇠에서 바꿀 수 있어요.'
     case 'no-speech':
-    case 'no-match': return '말소리를 못 들었어요. 버튼을 누른 뒤 바로 말해 주세요.'
+    case 'no-match':
+    case 'silent-end': return '말소리를 못 들었어요. 버튼을 누른 뒤 바로 말해 주세요. 키보드의 🎤 버튼으로도 말할 수 있어요.'
     case 'audio-capture': return '마이크를 찾지 못했어요.'
     case 'network': return '음성 인식에 인터넷이 필요해요.'
     case 'aborted': return ''
@@ -50,18 +58,41 @@ export function describeListenError(code: string): string {
   }
 }
 
+/** 어디서 돌아가는지 한 줄로: 홈 화면 앱인지 탭인지, Android·Chrome 버전. */
+function envSummary(): string {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return ''
+  const ua = navigator.userAgent ?? ''
+  const standalone = window.matchMedia?.('(display-mode: standalone)')?.matches
+  const android = /Android (\d+)/.exec(ua)?.[1]
+  const chrome = /Chrome\/(\d+)/.exec(ua)?.[1]
+  return [standalone ? '앱' : '탭', android && `Android ${android}`, chrome && `Chrome ${chrome}`].filter(Boolean).join(' ')
+}
+
 /**
- * 한 번 듣고 결과를 돌려준다. 끝나면 onEnd(error) 가 불린다(성공·중단이면 error 없음).
+ * 한 번 듣고 결과를 돌려준다. 끝나면 onEnd(error, trace) 가 불린다(성공·중단이면 error 없음).
+ * trace 는 무슨 일이 있었는지 한 줄 기록(어느 단계에서 끊겼는지 보려고 화면에 작게 보여 준다).
  * 돌려주는 함수를 부르면 중단된다.
  */
-export function listen(lang: string, onResult: (text: string) => void, onEnd: (error?: string) => void): () => void {
+export function listen(
+  lang: string,
+  onResult: (text: string) => void,
+  onEnd: (error?: string, trace?: string) => void,
+): () => void {
   const C = ctor()
-  if (!C) { onEnd('unsupported'); return () => {} }
+  if (!C) { onEnd('unsupported', envSummary()); return () => {} }
   let rec: RecognitionLike | null = null
   let failed: string | undefined
-  let heard = false
+  let results = 0
   let ended = false
-  const finish = (error?: string) => { if (ended) return; ended = true; onEnd(error) }
+  const t0 = Date.now()
+  const trace: string[] = [envSummary()].filter(Boolean)
+  const mark = (s: string) => trace.push(`${s} ${Date.now() - t0}ms`)
+  const finish = (error?: string) => {
+    if (ended) return
+    ended = true
+    trace.push(`result×${results}`, error ?? 'ok')
+    onEnd(error, trace.join(' · '))
+  }
 
   const start = () => {
     if (ended) return
@@ -71,18 +102,27 @@ export function listen(lang: string, onResult: (text: string) => void, onEnd: (e
       rec.interimResults = true
       rec.maxAlternatives = 1
       rec.continuous = false
+      rec.onstart = () => mark('start')
+      rec.onaudiostart = () => mark('audiostart')
+      rec.onsoundstart = () => mark('soundstart')
+      rec.onspeechstart = () => mark('speechstart')
+      rec.onspeechend = () => mark('speechend')
+      rec.onsoundend = () => mark('soundend')
+      rec.onaudioend = () => mark('audioend')
       rec.onresult = (e) => {
         const text = joinTranscript(e)
         if (!text) return
-        heard = true
+        results++
         onResult(text)
       }
-      rec.onnomatch = () => { failed = failed ?? 'no-match' }
-      rec.onerror = (e) => { failed = e.error; console.warn('[stt] error', e.error) }
-      rec.onend = () => finish(failed ?? (heard ? undefined : 'no-speech'))
+      rec.onnomatch = () => { mark('nomatch'); failed = failed ?? 'no-match' }
+      rec.onerror = (e) => { mark(`error ${e.error}`); failed = e.error; console.warn('[stt] error', e.error) }
+      // 오류도 결과도 없이 끝나면 진짜 no-speech 와 구분해 silent-end 로 알린다.
+      rec.onend = () => { mark('end'); finish(failed ?? (results > 0 ? undefined : 'silent-end')) }
       rec.start()
     } catch (e) {
       console.warn('[stt] start failed', e)
+      mark('start threw')
       finish('unsupported')
     }
   }
@@ -92,16 +132,18 @@ export function listen(lang: string, onResult: (text: string) => void, onEnd: (e
   const media = typeof navigator !== 'undefined' ? navigator.mediaDevices : undefined
   if (media?.getUserMedia) {
     media.getUserMedia({ audio: true }).then(
-      (stream) => { stream.getTracks().forEach((t) => t.stop()); start() },
+      (stream) => { stream.getTracks().forEach((t) => t.stop()); mark('gum ok'); start() },
       (e: unknown) => {
         const name = (e as { name?: string } | null)?.name ?? String(e)
         console.warn('[stt] getUserMedia failed', name)
+        mark(`gum ${name}`)
         if (name === 'NotAllowedError' || name === 'SecurityError') finish('not-allowed')
         else if (name === 'NotFoundError' || name === 'NotReadableError') finish('audio-capture')
         else start()
       },
     )
   } else {
+    mark('gum none')
     start()
   }
 

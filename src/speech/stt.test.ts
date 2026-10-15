@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach, vi } from 'vitest'
-import { listen, tidyHeard, joinTranscript } from './stt'
+import { listen, tidyHeard, joinTranscript, describeListenError } from './stt'
 
 class FakeRecognition {
   static last: FakeRecognition | null = null
@@ -7,6 +7,8 @@ class FakeRecognition {
   interimResults = false
   maxAlternatives = 1
   continuous = false
+  onstart: (() => void) | null = null
+  onaudiostart: (() => void) | null = null
   onresult: ((e: { results: ArrayLike<{ 0: { transcript: string } }> }) => void) | null = null
   onnomatch: (() => void) | null = null
   onend: (() => void) | null = null
@@ -46,7 +48,7 @@ describe('listen', () => {
     const onEnd = vi.fn()
     listen('ko-KR', vi.fn(), onEnd)
     await tick()
-    expect(onEnd).toHaveBeenCalledWith('not-allowed')
+    expect(onEnd).toHaveBeenCalledWith('not-allowed', expect.stringMatching(/gum NotAllowedError/))
     expect(FakeRecognition.last).toBeNull()
   })
 
@@ -56,12 +58,54 @@ describe('listen', () => {
     expect(FakeRecognition.last?.started).toBe(1)
   })
 
-  it('ends with no-speech when nothing was heard', () => {
+  it('ends with silent-end and a trace when recognition stops with no result and no error', async () => {
+    w.SpeechRecognition = FakeRecognition
+    nav.mediaDevices = { getUserMedia: vi.fn(async () => ({ getTracks: () => [{ stop: vi.fn() }] })) }
+    const onEnd = vi.fn()
+    listen('ko-KR', vi.fn(), onEnd)
+    await tick()
+    const rec = FakeRecognition.last!
+    rec.onstart?.()
+    rec.onaudiostart?.()
+    rec.onend?.()
+    expect(onEnd).toHaveBeenCalledTimes(1)
+    const [error, trace] = onEnd.mock.calls[0] as [string, string]
+    expect(error).toBe('silent-end')
+    expect(trace).toMatch(/gum ok/)
+    expect(trace).toMatch(/start/)
+    expect(trace).toMatch(/audiostart/)
+    expect(trace).toMatch(/end \d+ms/)
+    expect(trace).toMatch(/silent-end$/)
+  })
+
+  it('passes a real no-speech error through and shows it in the trace', () => {
     w.SpeechRecognition = FakeRecognition
     const onEnd = vi.fn()
     listen('ko-KR', vi.fn(), onEnd)
-    FakeRecognition.last!.onend?.()
-    expect(onEnd).toHaveBeenCalledWith('no-speech')
+    const rec = FakeRecognition.last!
+    rec.onerror?.({ error: 'no-speech' })
+    rec.onend?.()
+    expect(onEnd).toHaveBeenCalledWith('no-speech', expect.stringMatching(/error no-speech/))
+  })
+
+  it('counts results in the trace', () => {
+    w.SpeechRecognition = FakeRecognition
+    const onEnd = vi.fn()
+    listen('ko-KR', vi.fn(), onEnd)
+    const rec = FakeRecognition.last!
+    rec.onresult?.({ results: { length: 1, 0: { 0: { transcript: '달' } } } })
+    rec.onresult?.({ results: { length: 1, 0: { 0: { transcript: '달리다' } } } })
+    rec.onend?.()
+    expect(onEnd).toHaveBeenCalledWith(undefined, expect.stringMatching(/result×2/))
+  })
+})
+
+describe('describeListenError', () => {
+  it('explains a silent end like no-speech and points at the keyboard mic', () => {
+    const text = describeListenError('silent-end')
+    expect(text).toMatch(/못 들었어요/)
+    expect(text).toMatch(/키보드/)
+    expect(describeListenError('no-speech')).toBe(text)
   })
 })
 

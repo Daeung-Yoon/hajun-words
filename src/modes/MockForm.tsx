@@ -12,7 +12,7 @@ export default function MockForm({ words, onSubmit, submitting = false }: Props)
   const [answers, setAnswers] = useState<Record<string, string[]>>(() =>
     Object.fromEntries(words.map((w) => [w.id, w.senses.map(() => '')])))
   const [listening, setListening] = useState<string | null>(null)
-  const [micError, setMicError] = useState<{ key: string; text: string } | null>(null)
+  const [micError, setMicError] = useState<{ key: string; text: string; trace?: string } | null>(null)
   const stopRef = useRef<() => void>(() => {})
   const mic = canListen()
 
@@ -39,11 +39,11 @@ export default function MockForm({ words, onSubmit, submitting = false }: Props)
     if (listening === key) { setListening(null); return }
     setListening(key)
     setMicError(null)
-    stopRef.current = listen('ko-KR', (text) => set(id, i, tidyHeard(text)), (error) => {
+    stopRef.current = listen('ko-KR', (text) => set(id, i, tidyHeard(text)), (error, trace) => {
       stopRef.current = () => {}
       setListening(null)
       const text = error ? describeListenError(error) : ''
-      setMicError(text ? { key, text } : null)
+      setMicError(text ? { key, text, trace } : null)
     })
   }
   const lastId = words[words.length - 1]?.id
@@ -66,7 +66,12 @@ export default function MockForm({ words, onSubmit, submitting = false }: Props)
                   <button type="button" className={`btn ${on ? 'btn-primary' : ''}`} aria-label={`${w.word} 뜻 ${i + 1} 말하기`} aria-pressed={on}
                     onClick={() => hear(w.id, i)}>🎤</button>
                 )}
-                {micError?.key === key && <div className="danger" style={{ fontSize: '.9rem', flexBasis: '100%' }}>{micError.text}</div>}
+                {micError?.key === key && (
+                  <div style={{ flexBasis: '100%' }}>
+                    <div className="danger" style={{ fontSize: '.9rem' }}>{micError.text}</div>
+                    {micError.trace && <div className="muted" style={{ fontSize: '.75rem', wordBreak: 'break-all' }}>진단: {micError.trace}</div>}
+                  </div>
+                )}
               </div>
             )
           })}

@@ -102,6 +102,7 @@ describe('MockForm speech input', () => {
       await userEvent.click(screen.getByRole('button', { name: 'bank 뜻 1 말하기' }))
       act(() => { FakeRecognition.last!.onend?.() })
       expect(screen.getByText(/못 들었어요/)).toBeInTheDocument()
+      expect(screen.getByText(/진단: .*silent-end/)).toBeInTheDocument()
     } finally {
       delete (window as unknown as { SpeechRecognition?: unknown }).SpeechRecognition
     }
