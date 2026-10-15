@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach, vi } from 'vitest'
-import { listen, tidyHeard, joinTranscript, describeListenError } from './stt'
+import { listen, tidyHeard, joinTranscript, describeListenError, probeAvailability } from './stt'
 
 class FakeRecognition {
   static last: FakeRecognition | null = null
@@ -97,6 +97,46 @@ describe('listen', () => {
     rec.onresult?.({ results: { length: 1, 0: { 0: { transcript: '달리다' } } } })
     rec.onend?.()
     expect(onEnd).toHaveBeenCalledWith(undefined, expect.stringMatching(/result×2/))
+  })
+})
+
+describe('listen options', () => {
+  it('applies interimResults/continuous/maxAlternatives overrides', () => {
+    w.SpeechRecognition = FakeRecognition
+    listen('en-US', vi.fn(), vi.fn(), { interimResults: false, continuous: true, maxAlternatives: 5 })
+    const rec = FakeRecognition.last!
+    expect(rec.lang).toBe('en-US')
+    expect(rec.interimResults).toBe(false)
+    expect(rec.continuous).toBe(true)
+    expect(rec.maxAlternatives).toBe(5)
+  })
+
+  it('leaves lang unset and skips the microphone pre-open when asked', () => {
+    w.SpeechRecognition = FakeRecognition
+    const getUserMedia = vi.fn(async () => ({ getTracks: () => [] }))
+    nav.mediaDevices = { getUserMedia }
+    const onEnd = vi.fn()
+    listen('', vi.fn(), onEnd, { preopenMic: false })
+    expect(getUserMedia).not.toHaveBeenCalled()
+    expect(FakeRecognition.last?.started).toBe(1)
+    expect(FakeRecognition.last?.lang).toBe('')
+    FakeRecognition.last!.onend?.()
+    expect(onEnd).toHaveBeenCalledWith('silent-end', expect.stringMatching(/gum skip/))
+  })
+})
+
+describe('probeAvailability', () => {
+  it('reports the browser answer for cloud and on-device recognition', async () => {
+    const available = vi.fn(async (o: { processLocally?: boolean }) => (o.processLocally ? 'downloadable' : 'available'))
+    w.SpeechRecognition = Object.assign(class extends FakeRecognition {}, { available })
+    const text = await probeAvailability('ko-KR')
+    expect(available).toHaveBeenCalledWith({ langs: ['ko-KR'], processLocally: false })
+    expect(text).toMatch(/available/)
+    expect(text).toMatch(/downloadable/)
+  })
+  it('says so when the browser has no available()', async () => {
+    w.SpeechRecognition = FakeRecognition
+    expect(await probeAvailability('ko-KR')).toMatch(/없음/)
   })
 })
 

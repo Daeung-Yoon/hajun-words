@@ -20,7 +20,10 @@ interface RecognitionLike {
   stop(): void
   abort(): void
 }
-type RecognitionCtor = new () => RecognitionLike
+type RecognitionCtor = (new () => RecognitionLike) & {
+  /** Chrome 139+: 이 언어를 클라우드/기기 안에서 인식할 수 있는지. */
+  available?: (o: { langs: string[]; processLocally?: boolean }) => Promise<string>
+}
 export interface RecognitionEventLike {
   results: ArrayLike<{ 0: { transcript: string }; isFinal?: boolean }>
 }
@@ -40,6 +43,27 @@ function ctor(): RecognitionCtor | null {
 
 export function canListen(): boolean {
   return ctor() !== null
+}
+
+/** 브라우저가 이 언어를 인식할 수 있다고 하는지(클라우드·기기 안 각각). 구형 브라우저면 "없음". */
+export async function probeAvailability(lang: string): Promise<string> {
+  const C = ctor()
+  if (!C) return '음성 인식 없음'
+  const available = C.available
+  if (typeof available !== 'function') return 'available() 없음(Chrome 139 미만)'
+  const ask = async (processLocally: boolean) => {
+    try { return await available.call(C, { langs: [lang], processLocally }) } catch (e) { return `오류 ${(e as Error)?.name ?? e}` }
+  }
+  const [cloud, local] = await Promise.all([ask(false), ask(true)])
+  return `${lang} 클라우드 ${cloud} · 기기 안 ${local}`
+}
+
+export interface ListenOptions {
+  interimResults?: boolean
+  continuous?: boolean
+  maxAlternatives?: number
+  /** 인식 전에 getUserMedia 로 마이크를 한 번 여는지(기본 true). */
+  preopenMic?: boolean
 }
 
 /** 실패 코드를 아이가 읽을 수 있는 문장으로. */
@@ -77,6 +101,7 @@ export function listen(
   lang: string,
   onResult: (text: string) => void,
   onEnd: (error?: string, trace?: string) => void,
+  opts: ListenOptions = {},
 ): () => void {
   const C = ctor()
   if (!C) { onEnd('unsupported', envSummary()); return () => {} }
@@ -98,10 +123,10 @@ export function listen(
     if (ended) return
     try {
       rec = new C()
-      rec.lang = lang
-      rec.interimResults = true
-      rec.maxAlternatives = 1
-      rec.continuous = false
+      if (lang) rec.lang = lang
+      rec.interimResults = opts.interimResults ?? true
+      rec.maxAlternatives = opts.maxAlternatives ?? 1
+      rec.continuous = opts.continuous ?? false
       rec.onstart = () => mark('start')
       rec.onaudiostart = () => mark('audiostart')
       rec.onsoundstart = () => mark('soundstart')
@@ -130,7 +155,10 @@ export function listen(
   // 안드로이드 Chrome(특히 홈 화면에 설치한 앱)은 마이크를 먼저 한 번 열어 주지 않으면
   // 인식기가 소리를 못 받고 no-speech 로 끝나는 경우가 있다. 권한 프롬프트도 여기서 뜬다.
   const media = typeof navigator !== 'undefined' ? navigator.mediaDevices : undefined
-  if (media?.getUserMedia) {
+  if (opts.preopenMic === false) {
+    mark('gum skip')
+    start()
+  } else if (media?.getUserMedia) {
     media.getUserMedia({ audio: true }).then(
       (stream) => { stream.getTracks().forEach((t) => t.stop()); mark('gum ok'); start() },
       (e: unknown) => {
