@@ -2,13 +2,14 @@ import { Routes, Route } from 'react-router'
 import { AppProvider } from './AppContext'
 import Home from '../screens/Home'
 import Placeholder from '../screens/Placeholder'
+import Range from '../screens/Range'
 
 export default function App() {
   return (
     <AppProvider>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/range" element={<Placeholder title="범위 선택" />} />
+        <Route path="/range" element={<Range />} />
         <Route path="/tree" element={<Placeholder title="파생 트리" />} />
         <Route path="/blank" element={<Placeholder title="예문 빈칸" />} />
         <Route path="/pick" element={<Placeholder title="뜻 고르기" />} />
