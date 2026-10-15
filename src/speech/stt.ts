@@ -57,33 +57,55 @@ export function describeListenError(code: string): string {
 export function listen(lang: string, onResult: (text: string) => void, onEnd: (error?: string) => void): () => void {
   const C = ctor()
   if (!C) { onEnd('unsupported'); return () => {} }
-  let rec: RecognitionLike
+  let rec: RecognitionLike | null = null
   let failed: string | undefined
   let heard = false
   let ended = false
   const finish = (error?: string) => { if (ended) return; ended = true; onEnd(error) }
-  try {
-    rec = new C()
-    rec.lang = lang
-    rec.interimResults = true
-    rec.maxAlternatives = 1
-    rec.continuous = false
-    rec.onresult = (e) => {
-      const text = joinTranscript(e)
-      if (!text) return
-      heard = true
-      onResult(text)
+
+  const start = () => {
+    if (ended) return
+    try {
+      rec = new C()
+      rec.lang = lang
+      rec.interimResults = true
+      rec.maxAlternatives = 1
+      rec.continuous = false
+      rec.onresult = (e) => {
+        const text = joinTranscript(e)
+        if (!text) return
+        heard = true
+        onResult(text)
+      }
+      rec.onnomatch = () => { failed = failed ?? 'no-match' }
+      rec.onerror = (e) => { failed = e.error; console.warn('[stt] error', e.error) }
+      rec.onend = () => finish(failed ?? (heard ? undefined : 'no-speech'))
+      rec.start()
+    } catch (e) {
+      console.warn('[stt] start failed', e)
+      finish('unsupported')
     }
-    rec.onnomatch = () => { failed = failed ?? 'no-match' }
-    rec.onerror = (e) => { failed = e.error; console.warn('[stt] error', e.error) }
-    rec.onend = () => finish(failed ?? (heard ? undefined : 'no-speech'))
-    rec.start()
-  } catch (e) {
-    console.warn('[stt] start failed', e)
-    finish('unsupported')
-    return () => {}
   }
-  return () => { try { rec.abort() } catch { /* 이미 끝남 */ } finish('aborted') }
+
+  // 안드로이드 Chrome(특히 홈 화면에 설치한 앱)은 마이크를 먼저 한 번 열어 주지 않으면
+  // 인식기가 소리를 못 받고 no-speech 로 끝나는 경우가 있다. 권한 프롬프트도 여기서 뜬다.
+  const media = typeof navigator !== 'undefined' ? navigator.mediaDevices : undefined
+  if (media?.getUserMedia) {
+    media.getUserMedia({ audio: true }).then(
+      (stream) => { stream.getTracks().forEach((t) => t.stop()); start() },
+      (e: unknown) => {
+        const name = (e as { name?: string } | null)?.name ?? String(e)
+        console.warn('[stt] getUserMedia failed', name)
+        if (name === 'NotAllowedError' || name === 'SecurityError') finish('not-allowed')
+        else if (name === 'NotFoundError' || name === 'NotReadableError') finish('audio-capture')
+        else start()
+      },
+    )
+  } else {
+    start()
+  }
+
+  return () => { try { rec?.abort() } catch { /* 이미 끝남 */ } finish('aborted') }
 }
 
 /** 음성 인식 결과를 답안 칸에 넣기 좋게 다듬는다: 앞뒤 공백·마침표 제거. */
