@@ -34,3 +34,23 @@ describe('ranges', () => {
     expect(await getSetting('inputMode', 'choice')).toBe('typing')
   })
 })
+
+import { selectRange } from './ranges'
+
+describe('selectRange', () => {
+  it('reuses an existing range with the same bank and span instead of creating another', async () => {
+    const first = await selectRange({ bankId: 'b', from: 1, to: 20, name: '10/15 Day 20' })
+    await setAcademyScore(first, 90)
+    const again = await selectRange({ bankId: 'b', from: 1, to: 20, name: '10/16 Day 20' })
+    expect(again).toBe(first)
+    expect(await listRanges()).toHaveLength(1)
+    expect((await getCurrentRange())?.academyScore).toBe(90)
+  })
+
+  it('creates a new range when the span differs', async () => {
+    const a = await selectRange({ bankId: 'b', from: 1, to: 20, name: 'a' })
+    const b = await selectRange({ bankId: 'b', from: 21, to: 60, name: 'b' })
+    expect(b).not.toBe(a)
+    expect((await getCurrentRange())?.id).toBe(b)
+  })
+})

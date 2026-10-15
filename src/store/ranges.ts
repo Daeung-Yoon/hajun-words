@@ -40,3 +40,13 @@ export async function updateMockBest(id: number, score: number): Promise<void> {
   if (!r) return
   if (r.mockBest === null || score > r.mockBest) await db.ranges.update(id, { mockBest: score })
 }
+
+/** 같은 뱅크·구간의 범위가 이미 있으면 그걸 현재 범위로 쓰고, 없으면 새로 만든다. */
+export async function selectRange(input: { bankId: string; from: number; to: number; name: string }): Promise<number> {
+  const existing = await db.ranges.filter((r) => r.bankId === input.bankId && r.from === input.from && r.to === input.to).first()
+  if (existing?.id !== undefined) {
+    await setCurrentRange(existing.id)
+    return existing.id
+  }
+  return createRange(input)
+}

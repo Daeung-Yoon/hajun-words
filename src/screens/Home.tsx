@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router'
 import { useApp } from '../app/AppContext'
+import { daysOf, rangeName } from '../content/range'
 import { getStates, getStreak, getTodayCount } from '../store/progress'
+import { selectRange } from '../store/ranges'
 import type { Level } from '../study/level'
 
 const MODES = [
@@ -14,10 +16,11 @@ const MODES = [
 ]
 
 export default function Home() {
-  const { status, error, bankErrors, range, rangeWords } = useApp()
+  const { status, error, bank, banks, bankErrors, range, rangeWords, refreshRange, selectBank } = useApp()
   const [levels, setLevels] = useState<Record<Level, number>>({ 0: 0, 1: 0, 2: 0, 3: 0 })
   const [streak, setStreak] = useState(0)
   const [today, setToday] = useState(0)
+  const days = useMemo(() => (bank ? daysOf(bank) : []), [bank])
 
   useEffect(() => {
     let alive = true
@@ -33,7 +36,7 @@ export default function Home() {
   }, [rangeWords])
 
   if (status === 'loading') return <main className="page"><p className="muted">단어장을 불러오는 중…</p></main>
-  if (status === 'error') {
+  if (status === 'error' || !bank) {
     return (
       <main className="page">
         <h1>단어장을 불러올 수 없어요</h1>
@@ -45,8 +48,27 @@ export default function Home() {
   }
 
   const total = rangeWords.length
-  const hasRange = total > 0
+  const hasRange = total > 0 && range !== null
   const seg = (lv: Level) => ({ width: `${total ? (levels[lv] / total) * 100 : 0}%` })
+  const startDay = range ? days.find((d) => d.from === range.from)?.label ?? '' : ''
+  const endDay = range ? days.find((d) => d.to === range.to)?.label ?? '' : ''
+
+  const apply = async (from: number, to: number) => {
+    await selectRange({ bankId: bank.id, from, to, name: rangeName(bank, from, to, new Date()) })
+    await refreshRange()
+  }
+  const pickStart = (label: string) => {
+    const d = days.find((x) => x.label === label)
+    if (!d) return
+    const to = range && endDay && range.to >= d.from ? range.to : d.to
+    void apply(d.from, to)
+  }
+  const pickEnd = (label: string) => {
+    const d = days.find((x) => x.label === label)
+    if (!d) return
+    const from = range && startDay && range.from <= d.to ? range.from : d.from
+    void apply(from, d.to)
+  }
 
   return (
     <main className="page stack">
@@ -54,7 +76,24 @@ export default function Home() {
       {bankErrors.length > 0 && (
         <p className="danger">일부 단어장을 불러오지 못했어요: {bankErrors.join(' / ')} 아빠에게 알려주세요.</p>
       )}
-      <Link to="/range" className="card stack" style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
+      <section className="card stack">
+        {banks.length > 1 && (
+          <select className="input" aria-label="단어장" value={bank.id} onChange={(e) => { void selectBank(e.target.value) }}>
+            {banks.map((b) => <option key={b.id} value={b.id}>{b.title}</option>)}
+          </select>
+        )}
+        <div className="row">
+          <div className="stack" style={{ flex: 1 }}><span className="muted">시작</span>
+            <select className="input" aria-label="시작" value={startDay} onChange={(e) => pickStart(e.target.value)}>
+              <option value="">—</option>{days.map((d) => <option key={d.label} value={d.label}>{d.label}</option>)}
+            </select>
+          </div>
+          <div className="stack" style={{ flex: 1 }}><span className="muted">끝</span>
+            <select className="input" aria-label="끝" value={endDay} onChange={(e) => pickEnd(e.target.value)}>
+              <option value="">—</option>{days.map((d) => <option key={d.label} value={d.label}>{d.label}</option>)}
+            </select>
+          </div>
+        </div>
         {hasRange && range ? (
           <>
             <div className="row" style={{ justifyContent: 'space-between' }}>
@@ -66,9 +105,9 @@ export default function Home() {
             <div className="muted">확실 {levels[3]} · 익숙 {levels[2]} · 본 적 있음 {levels[1]} · 모름 {levels[0]}</div>
           </>
         ) : (
-          <strong>범위를 골라 주세요</strong>
+          <p className="muted" style={{ margin: 0 }}>Day를 골라 주세요</p>
         )}
-      </Link>
+      </section>
       <div className="grid-2">
         {MODES.map((m) => {
           const off = !hasRange || m.soon
