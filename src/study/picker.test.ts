@@ -12,6 +12,7 @@ const words = [mk('run', 1, ['달리다', '운영하다', '흐르다', '작동�
   mk('charge', 3, ['청구하다']), mk('draw', 4, ['그리다']), mk('bank', 5, ['은행'])]
 const states = (lv: Record<string, 0 | 1 | 2 | 3>) =>
   new Map<string, WordState>(words.map((w) => [w.id, { ...initialState(w.id), level: lv[w.id] ?? 0 }]))
+const seeded = (seed: number) => () => { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296 }
 const seq = (vals: number[]) => { let i = 0; return () => vals[i++ % vals.length] }
 
 describe('shuffle', () => {
@@ -34,8 +35,9 @@ describe('pickWords', () => {
   })
   it('prefers low-level words', () => {
     const st = states({ run: 3, fine: 3, charge: 3, draw: 3, bank: 0 })
+    const rng = seeded(42)
     let bankFirst = 0
-    for (let i = 0; i < 200; i++) if (pickWords(words, st, 1, 0, Math.random)[0].id === 'bank') bankFirst++
+    for (let i = 0; i < 200; i++) if (pickWords(words, st, 1, 0, rng)[0].id === 'bank') bankFirst++
     expect(bankFirst).toBeGreaterThan(80)
   })
 })
