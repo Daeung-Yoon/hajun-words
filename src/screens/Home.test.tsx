@@ -21,13 +21,16 @@ const renderHome = (v: Partial<AppValue>) =>
 beforeEach(async () => { await resetProgress() })
 
 describe('Home', () => {
-  it('shows Day selects, asks to pick a Day and disables modes when there is no range', () => {
+  it('shows only Day selects and the two modes, disabled until a Day is picked', () => {
     renderHome({})
     expect(screen.getByLabelText('시작')).toHaveValue('')
     expect(screen.getByLabelText('끝')).toHaveValue('')
     expect(screen.getByText('Day를 골라 주세요')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /예문 빈칸/ })).toHaveAttribute('aria-disabled', 'true')
-    expect(screen.queryByRole('link', { name: /범위/ })).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /파생 트리/ })).toHaveAttribute('aria-disabled', 'true')
+    expect(screen.getByRole('link', { name: /학원 모의시험/ })).toHaveAttribute('aria-disabled', 'true')
+    expect(screen.queryByText(/예문 빈칸|뜻 고르기|영영 매칭|문장 만들기/)).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: /기록|설정/ })).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('단어장')).not.toBeInTheDocument()
   })
 
   it('picking a Day saves it as the current range right away', async () => {
@@ -49,33 +52,19 @@ describe('Home', () => {
     expect(await listRanges()).toHaveLength(1)
   })
 
-  it('shows the current range name, word count and Day selects filled in', () => {
+  it('shows the range name and word count without level stats once a range is set', () => {
     renderHome({ range: { id: 1, name: '10/15 Day 2', bankId: 'b', from: 3, to: 4, createdAt: 0, mockBest: null, academyScore: null },
       rangeWords: [w('c', 3, 'Day 2'), w('d', 4, 'Day 2')] })
     expect(screen.getByText('10/15 Day 2')).toBeInTheDocument()
     expect(screen.getByText(/2단어/)).toBeInTheDocument()
     expect(screen.getByLabelText('시작')).toHaveValue('Day 2')
-    expect(screen.getByLabelText('끝')).toHaveValue('Day 2')
-    expect(screen.getByRole('link', { name: /예문 빈칸/ })).not.toHaveAttribute('aria-disabled', 'true')
-  })
-
-  it('shows a bank selector only when there are several banks', async () => {
-    const other: Bank = { id: 'other', title: '다른 단어장', words: [w('z', 1, 'Day 1')] }
-    const selectBank = vi.fn(async () => {})
-    renderHome({ banks: [bank, other], selectBank })
-    expect(screen.getByLabelText('단어장')).toHaveValue('b')
-    await userEvent.selectOptions(screen.getByLabelText('단어장'), 'other')
-    expect(selectBank).toHaveBeenCalledWith('other')
+    expect(screen.queryByText(/확실|익숙|모름|연속/)).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /파생 트리/ })).not.toHaveAttribute('aria-disabled', 'true')
+    expect(screen.getByRole('link', { name: /학원 모의시험/ })).not.toHaveAttribute('aria-disabled', 'true')
   })
 
   it('shows the error screen', () => {
-    renderHome({ status: 'error', error: 'banks/sample.json: 문제' })
+    renderHome({ status: 'error', error: 'banks/wordmaster.json: 문제' })
     expect(screen.getByText(/아빠에게 알려주세요/)).toBeInTheDocument()
-  })
-
-  it('lists banks that failed to load while staying usable', () => {
-    renderHome({ bankErrors: ['banks/bad.json: 문제'] })
-    expect(screen.getByText(/banks\/bad.json: 문제.*아빠에게 알려주세요/)).toBeInTheDocument()
-    expect(screen.getByText('Day를 골라 주세요')).toBeInTheDocument()
   })
 })
