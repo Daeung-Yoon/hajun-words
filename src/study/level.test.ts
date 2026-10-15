@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { initialState, applyView, applyAnswer, isStale, weight, STALE_MS } from './level'
+import { initialState, applyView, applyAnswer, isStale, weight, STALE_MS, type WordState } from './level'
 
 const T = 1_700_000_000_000
 
@@ -25,7 +25,7 @@ describe('level', () => {
     expect(s.stats.blank).toEqual({ correct: 2, wrong: 0 })
   })
   it('level never exceeds 3', () => {
-    let s = { ...initialState('run'), level: 3 as const, streak: 1 }
+    let s: WordState = { ...initialState('run'), level: 3, streak: 1 }
     s = applyAnswer(s, true, 'pick', T)
     expect(s.level).toBe(3)
   })
