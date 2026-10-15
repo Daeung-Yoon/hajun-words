@@ -1,5 +1,16 @@
 {
   "banks": [
-    { "id": "sample", "title": "샘플 단어장", "file": "banks/sample.json", "wordCount": 10 }
+    {
+      "id": "sample",
+      "title": "샘플 단어장",
+      "file": "banks/sample.json",
+      "wordCount": 10
+    },
+    {
+      "id": "wm-day20",
+      "title": "Word Master Day 20",
+      "file": "banks/wm-day20.json",
+      "wordCount": 20
+    }
   ]
 }
