@@ -1,0 +1,110 @@
+{
+  "id": "sample",
+  "title": "샘플 단어장",
+  "words": [
+    {
+      "id": "run", "no": 1, "source": "Day 1", "word": "run", "pos": "v.", "ipa": "/rʌn/",
+      "core": { "ko": "끊김 없이 쭉 흘러가다", "en": "to keep going without stopping" },
+      "senses": [
+        { "ko": "달리다", "en": "to move fast on foot", "bridge": "사람이 쭉 가면", "example": "She runs every morning before school.", "blank": "She ____ every morning before school." },
+        { "ko": "운영하다", "en": "to be in charge of a business", "bridge": "가게가 쭉 굴러가면", "example": "My uncle runs a small bakery.", "blank": "My uncle ____ a small bakery." },
+        { "ko": "흐르다", "en": "to flow", "bridge": "물이 쭉 가면", "example": "Tears ran down his face.", "blank": "Tears ____ down his face." },
+        { "ko": "작동하다", "en": "to work, for a machine", "bridge": "기계가 쭉 돌아가면", "example": "The engine won't run in cold weather.", "blank": "The engine won't ____ in cold weather." }
+      ],
+      "koGenerated": false, "image": null, "etymology": null
+    },
+    {
+      "id": "fine", "no": 2, "source": "Day 1", "word": "fine", "pos": "adj., n.", "ipa": "/faɪn/",
+      "core": { "ko": "흠 없이 곱게 다듬어진 것", "en": "finished so well that nothing is wrong" },
+      "senses": [
+        { "ko": "좋은", "en": "good or healthy", "bridge": "흠이 없으면 좋은 것", "example": "I feel fine today.", "blank": "I feel ____ today." },
+        { "ko": "가는", "en": "very thin or small", "bridge": "곱게 다듬으면 가늘어짐", "example": "Use a fine brush for the details.", "blank": "Use a ____ brush for the details." },
+        { "ko": "벌금", "en": "money you pay for breaking a rule", "bridge": "다른 뿌리: '끝내다'에서", "example": "I paid a fine for parking there.", "blank": "I paid a ____ for parking there." }
+      ],
+      "koGenerated": false, "image": null,
+      "etymology": "'좋은·가는'은 라틴어 finus(완성된)에서, '벌금'은 finis(끝)에서 왔어요. 벌금을 내면 그 일이 끝난다는 뜻이에요."
+    },
+    {
+      "id": "charge", "no": 3, "source": "Day 1", "word": "charge", "pos": "v., n.", "ipa": "/tʃɑːrdʒ/",
+      "core": { "ko": "무언가를 싣다", "en": "to load something onto" },
+      "senses": [
+        { "ko": "청구하다", "en": "to ask someone to pay money", "bridge": "돈 부담을 싣다", "example": "The hotel charged us for breakfast.", "blank": "The hotel ____ us for breakfast." },
+        { "ko": "충전하다", "en": "to put electricity into something", "bridge": "전기를 싣다", "example": "I need to charge my phone.", "blank": "I need to ____ my phone." },
+        { "ko": "책임", "en": "the job of being in control", "bridge": "책임을 싣다", "example": "Who is in charge of this project?", "blank": "Who is in ____ of this project?" }
+      ],
+      "koGenerated": false, "image": null, "etymology": null
+    },
+    {
+      "id": "light", "no": 4, "source": "Day 1", "word": "light", "pos": "n., adj.", "ipa": "/laɪt/",
+      "core": { "ko": "빛", "en": "the brightness that lets us see" },
+      "senses": [
+        { "ko": "빛", "en": "brightness from the sun or a lamp", "bridge": "그대로 빛", "example": "Turn on the light, please.", "blank": "Turn on the ____, please." },
+        { "ko": "밝은", "en": "full of light, not dark", "bridge": "빛이 많으면 밝은", "example": "The room is light and airy.", "blank": "The room is ____ and airy." },
+        { "ko": "가벼운", "en": "not heavy", "bridge": "다른 뿌리: 철자만 같아짐", "example": "This bag is light enough to carry.", "blank": "This bag is ____ enough to carry." }
+      ],
+      "koGenerated": false, "image": null,
+      "etymology": "'빛'과 '가벼운'은 원래 다른 단어였는데 세월이 지나 철자가 같아졌어요."
+    },
+    {
+      "id": "draw", "no": 5, "source": "Day 1", "word": "draw", "pos": "v., n.", "ipa": "/drɔː/",
+      "core": { "ko": "끌어당기다", "en": "to pull toward you" },
+      "senses": [
+        { "ko": "그리다", "en": "to make a picture with a pen or pencil", "bridge": "펜을 끌어 선을 만들면", "example": "She draws cartoons in class.", "blank": "She ____ cartoons in class." },
+        { "ko": "끌다", "en": "to attract people or attention", "bridge": "사람을 끌어당기면", "example": "The festival drew a huge crowd.", "blank": "The festival ____ a huge crowd." },
+        { "ko": "무승부", "en": "a game that nobody wins", "bridge": "양쪽이 똑같이 당겨 안 움직이면", "example": "The match ended in a draw.", "blank": "The match ended in a ____." }
+      ],
+      "koGenerated": false, "image": null, "etymology": null
+    },
+    {
+      "id": "match", "no": 6, "source": "Day 2", "word": "match", "pos": "n., v.", "ipa": "/mætʃ/",
+      "core": { "ko": "서로 맞는 짝", "en": "two things that go together" },
+      "senses": [
+        { "ko": "경기", "en": "a game between two teams", "bridge": "짝지어 겨루면", "example": "We watched a soccer match.", "blank": "We watched a soccer ____." },
+        { "ko": "어울리다", "en": "to look good together", "bridge": "짝이 잘 맞으면", "example": "Your shoes match your bag.", "blank": "Your shoes ____ your bag." },
+        { "ko": "성냥", "en": "a small stick that makes fire", "bridge": "다른 뿌리: 심지에서", "example": "He lit the candle with a match.", "blank": "He lit the candle with a ____." }
+      ],
+      "koGenerated": false, "image": null,
+      "etymology": "'짝'은 고대 영어 gemæcca, '성냥'은 그리스어 myxa(심지)에서 왔어요."
+    },
+    {
+      "id": "mean", "no": 7, "source": "Day 2", "word": "mean", "pos": "v., adj., n.", "ipa": "/miːn/",
+      "core": { "ko": "마음에 두다", "en": "to have something in mind" },
+      "senses": [
+        { "ko": "의미하다", "en": "to have a meaning", "bridge": "마음에 둔 뜻을 말하면", "example": "What does this word mean?", "blank": "What does this word ____?" },
+        { "ko": "못된", "en": "unkind", "bridge": "다른 뿌리: '평범한, 낮은'에서", "example": "Don't be mean to your sister.", "blank": "Don't be ____ to your sister." },
+        { "ko": "평균", "en": "the number in the middle, the average", "bridge": "다른 뿌리: 라틴어 medius(가운데)", "example": "The mean of 2, 4 and 6 is 4.", "blank": "The ____ of 2, 4 and 6 is 4." }
+      ],
+      "koGenerated": false, "image": null,
+      "etymology": "세 뜻이 각각 다른 뿌리예요. 수학의 '평균'은 medius(가운데)에서 왔어요."
+    },
+    {
+      "id": "fair", "no": 8, "source": "Day 2", "word": "fair", "pos": "adj., n.", "ipa": "/fer/",
+      "core": { "ko": "보기 좋고 고른 것", "en": "pleasing and even" },
+      "senses": [
+        { "ko": "공정한", "en": "treating everyone the same", "bridge": "고르게 대하면", "example": "The referee was fair to both teams.", "blank": "The referee was ____ to both teams." },
+        { "ko": "금발의", "en": "light in color, for hair or skin", "bridge": "보기 좋은 밝은 색", "example": "She has fair hair.", "blank": "She has ____ hair." },
+        { "ko": "박람회", "en": "a big event with shows and games", "bridge": "다른 뿌리: 라틴어 feria(축제일)", "example": "We went to the science fair.", "blank": "We went to the science ____." }
+      ],
+      "koGenerated": false, "image": null, "etymology": null
+    },
+    {
+      "id": "bank", "no": 9, "source": "Day 2", "word": "bank", "pos": "n.", "ipa": "/bæŋk/",
+      "core": { "ko": "쌓아 올린 둔덕", "en": "a raised pile of something" },
+      "senses": [
+        { "ko": "은행", "en": "a place that keeps money safe", "bridge": "돈을 쌓아 두는 곳", "example": "I put my money in the bank.", "blank": "I put my money in the ____." },
+        { "ko": "강둑", "en": "the land along a river", "bridge": "강가에 쌓인 흙", "example": "We sat on the river bank.", "blank": "We sat on the river ____." }
+      ],
+      "koGenerated": false, "image": null, "etymology": null
+    },
+    {
+      "id": "right", "no": 10, "source": "Day 2", "word": "right", "pos": "adj., n.", "ipa": "/raɪt/",
+      "core": { "ko": "똑바른 것", "en": "straight, not bent" },
+      "senses": [
+        { "ko": "옳은", "en": "correct", "bridge": "똑바르면 옳은 것", "example": "You got the right answer.", "blank": "You got the ____ answer." },
+        { "ko": "오른쪽", "en": "the side opposite the left", "bridge": "똑바로 뻗는 손 쪽", "example": "Turn right at the corner.", "blank": "Turn ____ at the corner." },
+        { "ko": "권리", "en": "something you are allowed to have or do", "bridge": "옳게 주어진 것", "example": "Everyone has the right to learn.", "blank": "Everyone has the ____ to learn." }
+      ],
+      "koGenerated": false, "image": null, "etymology": null
+    }
+  ]
+}

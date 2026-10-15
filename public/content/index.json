@@ -1,0 +1,5 @@
+{
+  "banks": [
+    { "id": "sample", "title": "샘플 단어장", "file": "banks/sample.json", "wordCount": 10 }
+  ]
+}
