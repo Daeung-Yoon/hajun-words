@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react'
 import type { Word } from '../content/schema'
-import { canListen, listen, tidyHeard } from '../speech/stt'
+import { canListen, describeListenError, listen, tidyHeard } from '../speech/stt'
 
 interface Props {
   words: Word[]
@@ -12,6 +12,7 @@ export default function MockForm({ words, onSubmit, submitting = false }: Props)
   const [answers, setAnswers] = useState<Record<string, string[]>>(() =>
     Object.fromEntries(words.map((w) => [w.id, w.senses.map(() => '')])))
   const [listening, setListening] = useState<string | null>(null)
+  const [micError, setMicError] = useState<{ key: string; text: string } | null>(null)
   const stopRef = useRef<() => void>(() => {})
   const mic = canListen()
 
@@ -37,7 +38,13 @@ export default function MockForm({ words, onSubmit, submitting = false }: Props)
     stopRef.current()
     if (listening === key) { setListening(null); return }
     setListening(key)
-    stopRef.current = listen('ko-KR', (text) => set(id, i, tidyHeard(text)), () => { stopRef.current = () => {}; setListening(null) })
+    setMicError(null)
+    stopRef.current = listen('ko-KR', (text) => set(id, i, tidyHeard(text)), (error) => {
+      stopRef.current = () => {}
+      setListening(null)
+      const text = error ? describeListenError(error) : ''
+      setMicError(text ? { key, text } : null)
+    })
   }
   const lastId = words[words.length - 1]?.id
   return (
@@ -59,6 +66,7 @@ export default function MockForm({ words, onSubmit, submitting = false }: Props)
                   <button type="button" className={`btn ${on ? 'btn-primary' : ''}`} aria-label={`${w.word} 뜻 ${i + 1} 말하기`} aria-pressed={on}
                     onClick={() => hear(w.id, i)}>🎤</button>
                 )}
+                {micError?.key === key && <div className="danger" style={{ fontSize: '.9rem', flexBasis: '100%' }}>{micError.text}</div>}
               </div>
             )
           })}

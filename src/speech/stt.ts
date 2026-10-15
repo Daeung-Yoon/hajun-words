@@ -4,9 +4,10 @@ interface RecognitionLike {
   lang: string
   interimResults: boolean
   maxAlternatives: number
+  continuous?: boolean
   onresult: ((e: { results: { 0: { 0: { transcript: string } } } }) => void) | null
   onend: (() => void) | null
-  onerror: (() => void) | null
+  onerror: ((e: { error: string }) => void) | null
   start(): void
   stop(): void
   abort(): void
@@ -23,19 +24,47 @@ export function canListen(): boolean {
   return ctor() !== null
 }
 
-/** 한 번 듣고 결과를 돌려준다. 돌려주는 함수를 부르면 중단된다. */
-export function listen(lang: string, onResult: (text: string) => void, onEnd: () => void): () => void {
+/** 실패 코드를 아이가 읽을 수 있는 문장으로. */
+export function describeListenError(code: string): string {
+  switch (code) {
+    case 'not-allowed':
+    case 'service-not-allowed': return '마이크 권한을 허용해 주세요. 주소창 옆 자물쇠에서 바꿀 수 있어요.'
+    case 'no-speech': return '말소리를 못 들었어요. 버튼을 누른 뒤 바로 말해 주세요.'
+    case 'audio-capture': return '마이크를 찾지 못했어요.'
+    case 'network': return '음성 인식에 인터넷이 필요해요.'
+    case 'aborted': return ''
+    case 'unsupported': return '이 브라우저는 음성 인식을 지원하지 않아요. Chrome 으로 열어 주세요.'
+    default: return `음성 인식이 안 됐어요 (${code})`
+  }
+}
+
+/**
+ * 한 번 듣고 결과를 돌려준다. 끝나면 onEnd(error) 가 불린다(성공·중단이면 error 없음).
+ * 돌려주는 함수를 부르면 중단된다.
+ */
+export function listen(lang: string, onResult: (text: string) => void, onEnd: (error?: string) => void): () => void {
   const C = ctor()
-  if (!C) { onEnd(); return () => {} }
-  const rec = new C()
-  rec.lang = lang
-  rec.interimResults = false
-  rec.maxAlternatives = 1
-  rec.onresult = (e) => onResult(e.results[0][0].transcript)
-  rec.onerror = () => onEnd()
-  rec.onend = () => onEnd()
-  rec.start()
-  return () => rec.abort()
+  if (!C) { onEnd('unsupported'); return () => {} }
+  let rec: RecognitionLike
+  let failed: string | undefined
+  let ended = false
+  const finish = (error?: string) => { if (ended) return; ended = true; onEnd(error) }
+  try {
+    rec = new C()
+    rec.lang = lang
+    rec.interimResults = false
+    rec.maxAlternatives = 1
+    rec.continuous = false
+    rec.onresult = (e) => onResult(e.results[0][0].transcript)
+    rec.onerror = (e) => { failed = e.error; console.warn('[stt] error', e.error) }
+    rec.onend = () => finish(failed)
+    rec.start()
+  } catch (e) {
+    console.warn('[stt] start failed', e)
+    finish('unsupported')
+    return () => {}
+  }
+  return () => { try { rec.abort() } catch { /* 이미 끝남 */ } finish('aborted') }
 }
 
 /** 음성 인식 결과를 답안 칸에 넣기 좋게 다듬는다: 앞뒤 공백·마침표 제거. */

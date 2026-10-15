@@ -62,7 +62,7 @@ describe('MockForm speech input', () => {
     maxAlternatives = 3
     onresult: ((e: { results: { 0: { 0: { transcript: string } } } }) => void) | null = null
     onend: (() => void) | null = null
-    onerror: (() => void) | null = null
+    onerror: ((e: { error: string }) => void) | null = null
     started = 0
     constructor() { FakeRecognition.last = this }
     start() { this.started++ }
@@ -83,6 +83,23 @@ describe('MockForm speech input', () => {
       expect(screen.getByLabelText('run 뜻 2')).toHaveValue('흐르다')
       expect(screen.getByLabelText('run 뜻 1')).toHaveValue('')
       expect(screen.getByRole('button', { name: 'run 뜻 2 말하기' })).toHaveAttribute('aria-pressed', 'false')
+    } finally {
+      delete (window as unknown as { SpeechRecognition?: unknown }).SpeechRecognition
+    }
+  })
+
+  it('shows why listening failed next to the field', async () => {
+    ;(window as unknown as { SpeechRecognition: unknown }).SpeechRecognition = FakeRecognition
+    try {
+      render(<MockForm words={words()} onSubmit={vi.fn()} />)
+      await userEvent.click(screen.getByRole('button', { name: 'bank 뜻 1 말하기' }))
+      const rec = FakeRecognition.last!
+      act(() => { rec.onerror?.({ error: 'not-allowed' }); rec.onend?.() })
+      expect(screen.getByText(/마이크 권한/)).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'bank 뜻 1 말하기' })).toHaveAttribute('aria-pressed', 'false')
+      await userEvent.click(screen.getByRole('button', { name: 'bank 뜻 1 말하기' }))
+      act(() => { FakeRecognition.last!.onerror?.({ error: 'no-speech' }); FakeRecognition.last!.onend?.() })
+      expect(screen.getByText(/못 들었어요/)).toBeInTheDocument()
     } finally {
       delete (window as unknown as { SpeechRecognition?: unknown }).SpeechRecognition
     }
