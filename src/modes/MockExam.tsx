@@ -6,9 +6,12 @@ import { shuffle } from '../study/picker'
 import { recordAnswer, recordSession } from '../store/progress'
 import { updateMockBest } from '../store/ranges'
 import MockForm from './MockForm'
+import WordTree from './WordTree'
+import { rangeName } from '../content/range'
 
 export default function MockExam() {
-  const { range, rangeWords } = useApp()
+  const { bank, range, rangeWords } = useApp()
+  const [detail, setDetail] = useState<string | null>(null)
   const [order, setOrder] = useState<'number' | 'shuffle'>('number')
   const [started, setStarted] = useState(false)
   const [result, setResult] = useState<{ score: number; results: MockWordResult[] } | null>(null)
@@ -55,9 +58,15 @@ export default function MockExam() {
         </div>
       )}
       {started && !result && <MockForm words={words} onSubmit={submit} submitting={submitting} />}
-      {result && (
+      {result && detail && byId.get(detail) && (
         <div className="stack">
-          <div className="card center"><div className="big">{result.score}점</div><div className="muted">{range?.name}</div></div>
+          <WordTree word={byId.get(detail)!} />
+          <button className="btn btn-primary btn-block" onClick={() => { setDetail(null); window.scrollTo(0, 0) }}>결과로 돌아가기</button>
+        </div>
+      )}
+      {result && !detail && (
+        <div className="stack">
+          <div className="card center"><div className="big">{result.score}점</div><div className="muted">{bank && range ? rangeName(bank, range.from, range.to) : range?.name}</div></div>
           {result.results.filter((r) => r.missed.length).map((r) => {
             const w = byId.get(r.wordId)!
             return (
@@ -66,11 +75,11 @@ export default function MockExam() {
                   <strong>{w.word}</strong><span className="muted">{r.matched}/{r.total}</span>
                 </div>
                 <div className="danger">놓친 뜻: {r.missed.join(', ')}</div>
-                <Link to={`/tree?start=${w.id}`} className="btn" style={{ marginTop: 8 }}>파생 트리 보기</Link>
+                <button className="btn" style={{ marginTop: 8 }} onClick={() => { setDetail(w.id); window.scrollTo(0, 0) }}>단어 보기</button>
               </div>
             )
           })}
-          <button className="btn btn-primary btn-block" onClick={() => { busy.current = false; setResult(null); setStarted(false) }}>다시 보기</button>
+          <button className="btn btn-primary btn-block" onClick={() => { busy.current = false; setResult(null); setDetail(null); setStarted(false) }}>다시 보기</button>
           <Link to="/" className="btn btn-block">홈으로</Link>
         </div>
       )}

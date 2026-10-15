@@ -65,3 +65,19 @@ describe('MockExam', () => {
     expect((await getStates(['run'])).get('run')!.stats.mock).toEqual({ correct: 1, wrong: 0 })
   })
 })
+
+describe('MockExam result detail', () => {
+  it('opens a missed word in place and returns to the same result', async () => {
+    const expected = gradeMockExam(words, answers).score
+    await renderExam()
+    await userEvent.click(screen.getByRole('button', { name: '채점하기' }))
+    await screen.findByText(`${expected}점`)
+    await userEvent.click(screen.getAllByRole('button', { name: '단어 보기' })[0])
+    expect(screen.getByText('fine', { selector: '.big' })).toBeInTheDocument()
+    expect(screen.queryByText(`${expected}점`)).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: /파생 트리 보기/ })).not.toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: '결과로 돌아가기' }))
+    expect(screen.getByText(`${expected}점`)).toBeInTheDocument()
+    expect(screen.getByText(/놓친 뜻: 괜찮은, 벌금/)).toBeInTheDocument()
+  })
+})
