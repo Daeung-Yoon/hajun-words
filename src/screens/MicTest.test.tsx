@@ -31,7 +31,7 @@ describe('MicTest', () => {
     expect(rec.lang).toBe('en-US')
     act(() => { rec.onresult?.({ results: { length: 1, 0: { 0: { transcript: 'apple' } } } }); rec.onend?.() })
     expect(screen.getByText(/들은 말: apple/)).toBeInTheDocument()
-    expect(screen.getByText(/진단: .*result×1 · ok/)).toBeInTheDocument()
+    expect(screen.getByText(/진단: .*result×1 · heard "apple" · ok/)).toBeInTheDocument()
   })
 
   it('shows the error code in the trace when a variant fails', async () => {
