@@ -5,7 +5,8 @@ import { MemoryRouter } from 'react-router'
 import { AppContext, type AppValue } from '../app/AppContext'
 import Settings from './Settings'
 import { resetProgress } from '../store/progress'
-import { createRange, listRanges, getSetting } from '../store/ranges'
+import { createRange, listRanges, getSetting, setAcademyScore } from '../store/ranges'
+import { exportAll } from '../store/exportImport'
 
 const value: AppValue = { status: 'ready', error: null, bank: { id: 'b', title: 'B', words: [] }, range: null, rangeWords: [], refreshRange: async () => {} }
 const renderIt = () => render(<MemoryRouter><AppContext.Provider value={value}><Settings /></AppContext.Provider></MemoryRouter>)
@@ -33,5 +34,17 @@ describe('Settings', () => {
     await userEvent.click(await screen.findByRole('button', { name: '진도 초기화' }))
     expect(await listRanges()).toHaveLength(1)
     vi.restoreAllMocks()
+  })
+  it('shows imported academy scores instead of stale input values', async () => {
+    const id = await createRange({ bankId: 'b', from: 1, to: 2, name: 'r1' })
+    await setAcademyScore(id, 70)
+    const json = await exportAll()
+    await setAcademyScore(id, 85)
+    renderIt()
+    const input = await screen.findByLabelText('r1 학원 점수')
+    expect(input).toHaveValue(85)
+    await userEvent.upload(screen.getByLabelText(/가져오기/), new File([json], 'p.json', { type: 'application/json' }))
+    await screen.findByText('가져왔어요')
+    expect(await screen.findByLabelText('r1 학원 점수')).toHaveValue(70)
   })
 })

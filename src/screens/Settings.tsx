@@ -60,7 +60,7 @@ export default function Settings() {
       <div className="card stack">
         {ranges.length === 0 && <p className="muted">아직 범위가 없어요.</p>}
         {ranges.map((r) => (
-          <div className="row" key={r.id} style={{ justifyContent: 'space-between' }}>
+          <div className="row" key={`${r.id}-${r.academyScore ?? ''}`} style={{ justifyContent: 'space-between' }}>
             <span>{r.name}</span>
             <input className="input" style={{ width: 90 }} type="number" min={0} max={100} aria-label={`${r.name} 학원 점수`}
               defaultValue={r.academyScore ?? ''} onBlur={(e) => saveScore(r, e.target.value)} />
