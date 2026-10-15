@@ -108,6 +108,7 @@ export function listen(
   let rec: RecognitionLike | null = null
   let failed: string | undefined
   let results = 0
+  let last = ''
   let ended = false
   const t0 = Date.now()
   const trace: string[] = [envSummary()].filter(Boolean)
@@ -115,7 +116,9 @@ export function listen(
   const finish = (error?: string) => {
     if (ended) return
     ended = true
-    trace.push(`result×${results}`, error ?? 'ok')
+    trace.push(`result×${results}`)
+    if (last) trace.push(`heard "${last}"`)
+    trace.push(error ?? 'ok')
     onEnd(error, trace.join(' · '))
   }
 
@@ -138,6 +141,7 @@ export function listen(
         const text = joinTranscript(e)
         if (!text) return
         results++
+        last = text
         onResult(text)
       }
       rec.onnomatch = () => { mark('nomatch'); failed = failed ?? 'no-match' }

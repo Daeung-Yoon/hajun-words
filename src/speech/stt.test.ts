@@ -96,7 +96,7 @@ describe('listen', () => {
     rec.onresult?.({ results: { length: 1, 0: { 0: { transcript: '달' } } } })
     rec.onresult?.({ results: { length: 1, 0: { 0: { transcript: '달리다' } } } })
     rec.onend?.()
-    expect(onEnd).toHaveBeenCalledWith(undefined, expect.stringMatching(/result×2/))
+    expect(onEnd).toHaveBeenCalledWith(undefined, expect.stringMatching(/result×2 · heard "달리다" · ok/))
   })
 })
 
