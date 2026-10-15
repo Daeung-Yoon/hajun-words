@@ -29,3 +29,22 @@ describe('WordTree', () => {
     expect(screen.getByText('That is fine by me.')).toBeInTheDocument()
   })
 })
+
+describe('WordTree reveal', () => {
+  it('reveal=0 shows only the word, then core, then one sense at a time, then etymology', () => {
+    const { rerender } = render(<WordTree word={fine} reveal={0} />)
+    expect(screen.getByText('fine', { selector: '.big' })).toBeInTheDocument()
+    expect(screen.queryByText('흠 없이 곱게 다듬어진 것')).not.toBeInTheDocument()
+    expect(screen.queryByText('좋은')).not.toBeInTheDocument()
+    rerender(<WordTree word={fine} reveal={1} />)
+    expect(screen.getByText('흠 없이 곱게 다듬어진 것')).toBeInTheDocument()
+    expect(screen.queryByText('좋은')).not.toBeInTheDocument()
+    rerender(<WordTree word={fine} reveal={2} />)
+    expect(screen.getByText('좋은')).toBeInTheDocument()
+    expect(screen.queryByText('벌금')).not.toBeInTheDocument()
+    expect(screen.queryByText(/finis[(]끝[)]/)).not.toBeInTheDocument()
+    rerender(<WordTree word={fine} reveal={4} />)
+    expect(screen.getByText('벌금')).toBeInTheDocument()
+    expect(screen.getByText(/finis[(]끝[)]/)).toBeInTheDocument()
+  })
+})

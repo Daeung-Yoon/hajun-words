@@ -26,7 +26,7 @@ describe('Home', () => {
     expect(screen.getByLabelText('시작')).toHaveValue('')
     expect(screen.getByLabelText('끝')).toHaveValue('')
     expect(screen.getByText('Day를 골라 주세요')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /파생 트리/ })).toHaveAttribute('aria-disabled', 'true')
+    expect(screen.getByRole('link', { name: /^단어/ })).toHaveAttribute('aria-disabled', 'true')
     expect(screen.getByRole('link', { name: /학원 모의시험/ })).toHaveAttribute('aria-disabled', 'true')
     expect(screen.queryByText(/예문 빈칸|뜻 고르기|영영 매칭|문장 만들기/)).not.toBeInTheDocument()
     expect(screen.queryByRole('link', { name: /기록|설정/ })).not.toBeInTheDocument()
@@ -59,7 +59,7 @@ describe('Home', () => {
     expect(screen.getByText(/2단어/)).toBeInTheDocument()
     expect(screen.getByLabelText('시작')).toHaveValue('Day 2')
     expect(screen.queryByText(/확실|익숙|모름|연속/)).not.toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /파생 트리/ })).not.toHaveAttribute('aria-disabled', 'true')
+    expect(screen.getByRole('link', { name: /^단어/ })).not.toHaveAttribute('aria-disabled', 'true')
     expect(screen.getByRole('link', { name: /학원 모의시험/ })).not.toHaveAttribute('aria-disabled', 'true')
   })
 

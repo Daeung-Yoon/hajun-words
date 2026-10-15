@@ -5,7 +5,7 @@ import { daysOf, rangeName } from '../content/range'
 import { selectRange } from '../store/ranges'
 
 const MODES = [
-  { to: '/tree', label: '파생 트리', hint: '읽기' },
+  { to: '/tree', label: '단어', hint: '넘기며 보기' },
   { to: '/mock', label: '학원 모의시험', hint: '전체' },
 ]
 
