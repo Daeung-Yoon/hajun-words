@@ -16,6 +16,12 @@ export default function Range() {
 
   useEffect(() => { void listRanges().then(setRecent) }, [])
 
+  useEffect(() => {
+    if (!bank) return
+    setFrom(range?.from ?? days[0]?.from ?? 1)
+    setTo(range?.to ?? days[0]?.to ?? 1)
+  }, [bank, range, days])
+
   if (!bank) return null
   const startDay = days.find((d) => d.from === from)?.label ?? ''
   const endDay = days.find((d) => d.to === to)?.label ?? ''

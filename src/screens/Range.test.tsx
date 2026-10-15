@@ -36,4 +36,18 @@ describe('Range', () => {
     expect(cur?.to).toBe(4)
     expect(cur?.name).toMatch(/Day 2$/)
   })
+
+  it('reflects the bank and range once they finish loading', async () => {
+    const ui = (v: AppValue) => (
+      <MemoryRouter initialEntries={['/range']}>
+        <AppContext.Provider value={v}>
+          <Routes><Route path="/range" element={<Range />} /></Routes>
+        </AppContext.Provider>
+      </MemoryRouter>
+    )
+    const { rerender } = render(ui({ ...value, status: 'loading', bank: null }))
+    rerender(ui({ ...value, range: { id: 1, name: 'r', bankId: 'b', from: 3, to: 4, createdAt: 0, mockBest: null, academyScore: null } }))
+    await waitFor(() => expect(screen.getByLabelText('시작 번호')).toHaveValue(3))
+    expect(screen.getByLabelText('끝 번호')).toHaveValue(4)
+  })
 })
