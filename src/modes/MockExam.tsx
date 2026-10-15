@@ -30,8 +30,11 @@ export default function MockExam() {
       }
       setResult(r)
       window.scrollTo(0, 0)
-    } finally {
+      // 결과 화면으로 바뀔 때까지 busy 를 유지한다(두 번째 탭이 그 틈에 또 저장하는 것을 막음). "다시 보기"에서 푼다.
+    } catch (e) {
       busy.current = false
+      throw e
+    } finally {
       setSubmitting(false)
     }
   }
@@ -67,7 +70,7 @@ export default function MockExam() {
               </div>
             )
           })}
-          <button className="btn btn-primary btn-block" onClick={() => { setResult(null); setStarted(false) }}>다시 보기</button>
+          <button className="btn btn-primary btn-block" onClick={() => { busy.current = false; setResult(null); setStarted(false) }}>다시 보기</button>
           <Link to="/" className="btn btn-block">홈으로</Link>
         </div>
       )}

@@ -26,6 +26,7 @@ export default function QuizScreen({ mode }: { mode: 'blank' | 'pick' }) {
     setQuestions(buildRound(mode, rangeWords, bank.words, states, Date.now(), Math.random))
     setResult(null)
     setKey((k) => k + 1)
+    finishing.current = false
   }, [bank, rangeWords, mode])
 
   useEffect(() => { void start() }, [start])
@@ -38,8 +39,10 @@ export default function QuizScreen({ mode }: { mode: 'blank' | 'pick' }) {
       const after = await getStates(questions.map((q) => q.wordId))
       const up = [...after.values()].filter((s) => s.level > (before.get(s.id)?.level ?? 0)).map((s) => s.id)
       setResult({ correct, total: questions.length, up })
-    } finally {
+      // 결과 화면으로 바뀔 때까지 플래그를 유지한다. 저장 직후 풀면 두 번째 탭이 그 틈에 또 저장한다. 다음 start()에서 푼다.
+    } catch (e) {
       finishing.current = false
+      throw e
     }
   }
 
