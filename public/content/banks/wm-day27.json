@@ -1,0 +1,1267 @@
+{
+  "id": "wm-day27",
+  "title": "Word Master Day 27",
+  "words": [
+    {
+      "id": "bear",
+      "no": 1,
+      "source": "Day 27",
+      "word": "bear",
+      "pos": "n. / v.",
+      "ipa": "/ber/",
+      "core": {
+        "ko": "무거운 것을 몸으로 받쳐 들다",
+        "en": "to hold something heavy with your body"
+      },
+      "senses": [
+        {
+          "ko": "곰",
+          "en": "a large, heavy animal with thick fur",
+          "bridge": "다른 뿌리: 짐승 이름",
+          "example": "A big bear was eating berries in the woods.",
+          "blank": "A big ____ was eating berries in the woods."
+        },
+        {
+          "ko": "참다(견디다)",
+          "en": "to put up with something hard",
+          "bridge": "힘든 것을 받쳐 들면",
+          "example": "I can't bear the noise from upstairs.",
+          "blank": "I can't ____ the noise from upstairs."
+        },
+        {
+          "ko": "낳다(열매를 맺다)",
+          "en": "to produce fruit or a baby",
+          "bridge": "몸으로 받쳐 내보내면",
+          "example": "The old tree still bears fruit every summer.",
+          "blank": "The old tree still ____ fruit every summer."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "동사 bear(받치다, bear-bore-born)와 동물 bear(갈색 짐승)는 다른 뿌리인데 철자가 같아졌다."
+    },
+    {
+      "id": "sound",
+      "no": 2,
+      "source": "Day 27",
+      "word": "sound",
+      "pos": "n. / v. / a. / ad.",
+      "ipa": "/saʊnd/",
+      "core": {
+        "ko": "귀에 들리는 것",
+        "en": "what reaches your ears"
+      },
+      "senses": [
+        {
+          "ko": "소리",
+          "en": "something you hear",
+          "bridge": "핵심 그대로",
+          "example": "I heard a strange sound in the kitchen.",
+          "blank": "I heard a strange ____ in the kitchen."
+        },
+        {
+          "ko": "소리를 내다",
+          "en": "to make a sound",
+          "bridge": "소리가 나면(동사)",
+          "example": "The alarm sounded at seven.",
+          "blank": "The alarm ____ at seven."
+        },
+        {
+          "ko": "~처럼 들리다(~인 것 같다)",
+          "en": "to seem a certain way when you hear it",
+          "bridge": "귀에 그렇게 들리면",
+          "example": "That plan sounds great to me.",
+          "blank": "That plan ____ great to me."
+        },
+        {
+          "ko": "건전한",
+          "en": "healthy and sensible",
+          "bridge": "다른 뿌리: 온전한",
+          "example": "She gave me sound advice about saving money.",
+          "blank": "She gave me ____ advice about saving money."
+        },
+        {
+          "ko": "깊게(푹, ~ asleep)",
+          "en": "deeply, for sleep",
+          "bridge": "온전하게 잠들면",
+          "example": "The baby is sound asleep in the car.",
+          "blank": "The baby is ____ asleep in the car."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "소리(라틴어 sonus)와 건전한·푹(옛 영어 gesund '온전한')은 다른 뿌리."
+    },
+    {
+      "id": "bill",
+      "no": 3,
+      "source": "Day 27",
+      "word": "bill",
+      "pos": "n.",
+      "ipa": "/bɪl/",
+      "core": {
+        "ko": "내밀어진 종이 한 장",
+        "en": "a sheet of paper handed to you"
+      },
+      "senses": [
+        {
+          "ko": "청구서(계산서)",
+          "en": "a paper that says how much you must pay",
+          "bridge": "돈 내라고 내밀면",
+          "example": "Mom paid the electricity bill today.",
+          "blank": "Mom paid the electricity ____ today."
+        },
+        {
+          "ko": "지폐",
+          "en": "paper money",
+          "bridge": "돈 자체가 종이면",
+          "example": "He found a ten-dollar bill on the floor.",
+          "blank": "He found a ten-dollar ____ on the floor."
+        },
+        {
+          "ko": "법안",
+          "en": "a written plan for a new law",
+          "bridge": "법을 만들자고 내밀면",
+          "example": "The new bill will protect wild animals.",
+          "blank": "The new ____ will protect wild animals."
+        },
+        {
+          "ko": "(새의) 부리",
+          "en": "a bird's beak",
+          "bridge": "다른 뿌리: 새 부리",
+          "example": "The duck caught a fish in its bill.",
+          "blank": "The duck caught a fish in its ____."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "종이(라틴어 bulla '도장 찍은 문서')와 부리(옛 영어 bile)는 다른 뿌리."
+    },
+    {
+      "id": "count",
+      "no": 4,
+      "source": "Day 27",
+      "word": "count",
+      "pos": "v. / n.",
+      "ipa": "/kaʊnt/",
+      "core": {
+        "ko": "하나하나 세어 넣다",
+        "en": "to add things up one by one"
+      },
+      "senses": [
+        {
+          "ko": "세다(계산하다)",
+          "en": "to say numbers in order to find how many",
+          "bridge": "핵심 그대로",
+          "example": "Count the apples in the basket.",
+          "blank": "____ the apples in the basket."
+        },
+        {
+          "ko": "셈(계산, 총계)",
+          "en": "the total you get by counting",
+          "bridge": "센 결과면(명사)",
+          "example": "Keep a count of how many birds you see.",
+          "blank": "Keep a ____ of how many birds you see."
+        },
+        {
+          "ko": "중요하다",
+          "en": "to matter",
+          "bridge": "셈에 들어갈 만큼 중요하면",
+          "example": "Every vote counts in this election.",
+          "blank": "Every vote ____ in this election."
+        },
+        {
+          "ko": "간주하다(여기다)",
+          "en": "to think of someone as something",
+          "bridge": "그쪽으로 세어 넣으면",
+          "example": "I count you as my best friend.",
+          "blank": "I ____ you as my best friend."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": null
+    },
+    {
+      "id": "present",
+      "no": 5,
+      "source": "Day 27",
+      "word": "present",
+      "pos": "a. / n. / v.",
+      "ipa": "a., n. /ˈpreznt/ v. /prɪˈzent/",
+      "core": {
+        "ko": "눈앞에 있다",
+        "en": "to be right here, in front of you"
+      },
+      "senses": [
+        {
+          "ko": "현재의",
+          "en": "happening now",
+          "bridge": "지금 눈앞에 있으면(형용사)",
+          "example": "The present weather is perfect for a picnic.",
+          "blank": "The ____ weather is perfect for a picnic."
+        },
+        {
+          "ko": "현재",
+          "en": "the time now",
+          "bridge": "지금이면(명사)",
+          "example": "Forget the past and enjoy the present.",
+          "blank": "Forget the past and enjoy the ____."
+        },
+        {
+          "ko": "있는(존재하는, 출석한)",
+          "en": "here, not absent",
+          "bridge": "그 자리에 있으면",
+          "example": "All the students were present today.",
+          "blank": "All the students were ____ today."
+        },
+        {
+          "ko": "선물",
+          "en": "a gift",
+          "bridge": "눈앞에 내놓는 것이면",
+          "example": "I got a cute present for my birthday.",
+          "blank": "I got a cute ____ for my birthday."
+        },
+        {
+          "ko": "제시하다(보여 주다, 발표하다)",
+          "en": "to show or give something to people",
+          "bridge": "눈앞에 내놓으면(동사)",
+          "example": "Each group will present their poster tomorrow.",
+          "blank": "Each group will ____ their poster tomorrow."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "pre(앞) + sent(있다): 앞에 있다. 동사는 뒤에 강세(prɪˈzent)."
+    },
+    {
+      "id": "grave",
+      "no": 6,
+      "source": "Day 27",
+      "word": "grave",
+      "pos": "n. / a.",
+      "ipa": "/ɡreɪv/",
+      "core": {
+        "ko": "무겁게 가라앉은",
+        "en": "heavy and sunk down"
+      },
+      "senses": [
+        {
+          "ko": "무덤(묘)",
+          "en": "a place in the ground where a dead person is buried",
+          "bridge": "다른 뿌리: 땅을 판 자리",
+          "example": "We put flowers on Grandpa's grave.",
+          "blank": "We put flowers on Grandpa's ____."
+        },
+        {
+          "ko": "심각한",
+          "en": "very serious and worrying",
+          "bridge": "분위기가 무겁게 가라앉으면",
+          "example": "The doctor had a grave look on his face.",
+          "blank": "The doctor had a ____ look on his face."
+        },
+        {
+          "ko": "중대한(중요한)",
+          "en": "very important because of possible danger",
+          "bridge": "무게가 큰 일이면",
+          "example": "Lying to the judge is a grave mistake.",
+          "blank": "Lying to the judge is a ____ mistake."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "무덤은 옛 영어 grafan(파다), 심각한은 라틴어 gravis(무거운)로 다른 뿌리."
+    },
+    {
+      "id": "subject",
+      "no": 7,
+      "source": "Day 27",
+      "word": "subject",
+      "pos": "n. / a.",
+      "ipa": "/ˈsʌbdʒɪkt/",
+      "core": {
+        "ko": "아래에 놓여 다루어지는 것",
+        "en": "something placed under and dealt with"
+      },
+      "senses": [
+        {
+          "ko": "주제",
+          "en": "what a talk or book is about",
+          "bridge": "이야기 아래 깔린 것이면",
+          "example": "The subject of today's class is the ocean.",
+          "blank": "The ____ of today's class is the ocean."
+        },
+        {
+          "ko": "과목(학과)",
+          "en": "an area of study at school",
+          "bridge": "공부 아래 깔린 분야면",
+          "example": "Science is my favorite subject.",
+          "blank": "Science is my favorite ____."
+        },
+        {
+          "ko": "피실험자",
+          "en": "a person studied in an experiment",
+          "bridge": "실험 아래 놓인 사람이면",
+          "example": "Ten subjects tried the new medicine.",
+          "blank": "Ten ____ tried the new medicine."
+        },
+        {
+          "ko": "~을 받기 쉬운(~될 수 있는, to)",
+          "en": "likely to be affected by something",
+          "bridge": "어떤 힘 아래 놓이면(형용사)",
+          "example": "Plane times are subject to change.",
+          "blank": "Plane times are ____ to change."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "sub(아래) + ject(던지다): 아래에 던져진 것."
+    },
+    {
+      "id": "draw",
+      "no": 8,
+      "source": "Day 27",
+      "word": "draw",
+      "pos": "v.",
+      "ipa": "/drɔː/",
+      "core": {
+        "ko": "끌어당기다",
+        "en": "to pull toward you"
+      },
+      "senses": [
+        {
+          "ko": "(선으로) 그리다",
+          "en": "to make a picture with a pencil or pen",
+          "bridge": "연필을 끌어 선을 내면",
+          "example": "She likes to draw cats in her notebook.",
+          "blank": "She likes to ____ cats in her notebook."
+        },
+        {
+          "ko": "끌어당기다",
+          "en": "to pull something along",
+          "bridge": "핵심 그대로",
+          "example": "Two horses drew the heavy cart.",
+          "blank": "Two horses ____ the heavy cart."
+        },
+        {
+          "ko": "(관심을) 끌다",
+          "en": "to attract attention",
+          "bridge": "사람 눈길을 끌어당기면",
+          "example": "The loud music drew a big crowd.",
+          "blank": "The loud music ____ a big crowd."
+        },
+        {
+          "ko": "(결론을) 내다(도출하다)",
+          "en": "to reach an idea after thinking",
+          "bridge": "생각을 끌어내면",
+          "example": "We drew a conclusion from the test results.",
+          "blank": "We ____ a conclusion from the test results."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": null
+    },
+    {
+      "id": "contract",
+      "no": 9,
+      "source": "Day 27",
+      "word": "contract",
+      "pos": "n. / v.",
+      "ipa": "n. /ˈkɑːntrækt/ v. /kənˈtrækt/",
+      "core": {
+        "ko": "함께 끌어당겨 묶다",
+        "en": "to pull together"
+      },
+      "senses": [
+        {
+          "ko": "계약서(계약)",
+          "en": "a written agreement",
+          "bridge": "두 사람을 끌어 묶은 약속이면",
+          "example": "The player signed a two-year contract.",
+          "blank": "The player signed a two-year ____."
+        },
+        {
+          "ko": "계약하다",
+          "en": "to make a formal agreement",
+          "bridge": "약속으로 묶으면(동사)",
+          "example": "The city contracted a company to build the bridge.",
+          "blank": "The city ____ a company to build the bridge."
+        },
+        {
+          "ko": "수축하다(줄어들다)",
+          "en": "to become smaller",
+          "bridge": "안으로 끌어당겨지면",
+          "example": "Metal contracts when it gets cold.",
+          "blank": "Metal ____ when it gets cold."
+        },
+        {
+          "ko": "(병에) 걸리다",
+          "en": "to catch an illness",
+          "bridge": "병을 끌어당겨 받으면",
+          "example": "He contracted the flu on the trip.",
+          "blank": "He ____ the flu on the trip."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "con(함께) + tract(끌다). 명사는 앞 강세, 동사는 뒤 강세."
+    },
+    {
+      "id": "hold",
+      "no": 10,
+      "source": "Day 27",
+      "word": "hold",
+      "pos": "v.",
+      "ipa": "/hoʊld/",
+      "core": {
+        "ko": "손에 쥐고 놓지 않다",
+        "en": "to keep something in your hands"
+      },
+      "senses": [
+        {
+          "ko": "잡고 있다(쥐고 있다, 들다)",
+          "en": "to have something in your hand",
+          "bridge": "핵심 그대로",
+          "example": "Hold my hand when we cross the street.",
+          "blank": "____ my hand when we cross the street."
+        },
+        {
+          "ko": "개최하다(열다)",
+          "en": "to have a meeting or event",
+          "bridge": "행사를 손에 쥐고 진행하면",
+          "example": "Our school holds a festival every May.",
+          "blank": "Our school ____ a festival every May."
+        },
+        {
+          "ko": "두다(유지하다)",
+          "en": "to keep something in a position",
+          "bridge": "그 상태로 쥐고 있으면",
+          "example": "Hold the door open for the man with boxes.",
+          "blank": "____ the door open for the man with boxes."
+        },
+        {
+          "ko": "담다(수용하다)",
+          "en": "to have space for",
+          "bridge": "안에 쥐고 있을 수 있으면",
+          "example": "This bottle holds one liter of water.",
+          "blank": "This bottle ____ one liter of water."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": null
+    },
+    {
+      "id": "balance",
+      "no": 11,
+      "source": "Day 27",
+      "word": "balance",
+      "pos": "v. / n.",
+      "ipa": "/ˈbæləns/",
+      "core": {
+        "ko": "양쪽 접시가 같아지다",
+        "en": "two sides becoming equal"
+      },
+      "senses": [
+        {
+          "ko": "균형을 잡다",
+          "en": "to keep steady without falling",
+          "bridge": "양쪽이 같아지게 하면(동사)",
+          "example": "The cat balanced on the thin fence.",
+          "blank": "The cat ____ on the thin fence."
+        },
+        {
+          "ko": "균형",
+          "en": "a steady state where no side is heavier",
+          "bridge": "핵심 그대로",
+          "example": "I lost my balance and fell off the bike.",
+          "blank": "I lost my ____ and fell off the bike."
+        },
+        {
+          "ko": "잔고(잔액)",
+          "en": "the money left in a bank account",
+          "bridge": "들어온 돈과 나간 돈을 맞춘 결과면",
+          "example": "My bank balance is only ten dollars.",
+          "blank": "My bank ____ is only ten dollars."
+        },
+        {
+          "ko": "저울",
+          "en": "a tool for weighing things",
+          "bridge": "양쪽 접시 도구 자체면",
+          "example": "Put the flour on the balance and weigh it.",
+          "blank": "Put the flour on the ____ and weigh it."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "라틴어 bi(둘) + lanx(접시): 접시 두 개짜리 저울."
+    },
+    {
+      "id": "character",
+      "no": 12,
+      "source": "Day 27",
+      "word": "character",
+      "pos": "n.",
+      "ipa": "/ˈkærəktər/",
+      "core": {
+        "ko": "새겨진 표시",
+        "en": "a mark cut into something"
+      },
+      "senses": [
+        {
+          "ko": "성격",
+          "en": "the kind of person someone is",
+          "bridge": "사람에게 새겨진 표시면",
+          "example": "She has a kind and cheerful character.",
+          "blank": "She has a kind and cheerful ____."
+        },
+        {
+          "ko": "특징",
+          "en": "the special quality of something",
+          "bridge": "사물에 새겨진 표시면",
+          "example": "The old town has a character all its own.",
+          "blank": "The old town has a ____ all its own."
+        },
+        {
+          "ko": "등장인물",
+          "en": "a person in a story",
+          "bridge": "이야기 속에 새겨진 인물이면",
+          "example": "My favorite character in the book is the dragon.",
+          "blank": "My favorite ____ in the book is the dragon."
+        },
+        {
+          "ko": "글자",
+          "en": "a letter or symbol in writing",
+          "bridge": "글로 새겨진 표시면",
+          "example": "Chinese characters can be hard to write.",
+          "blank": "Chinese ____ can be hard to write."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "그리스어 kharakter(새기는 도구, 새긴 자국)."
+    },
+    {
+      "id": "absorb",
+      "no": 13,
+      "source": "Day 27",
+      "word": "absorb",
+      "pos": "v.",
+      "ipa": "/əbˈzɔːrb/",
+      "core": {
+        "ko": "빨아들여 안에 담다",
+        "en": "to soak up and take inside"
+      },
+      "senses": [
+        {
+          "ko": "흡수하다",
+          "en": "to take in liquid, heat, or information",
+          "bridge": "핵심 그대로",
+          "example": "A sponge absorbs water quickly.",
+          "blank": "A sponge ____ water quickly."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "ab(떨어져) + sorb(빨다). absurd(터무니없는)와 끝 철자 -orb/-urd 구별."
+    },
+    {
+      "id": "absurd",
+      "no": 14,
+      "source": "Day 27",
+      "word": "absurd",
+      "pos": "a.",
+      "ipa": "/əbˈsɜːrd/",
+      "core": {
+        "ko": "말이 안 되게 우스운",
+        "en": "so silly that it makes no sense"
+      },
+      "senses": [
+        {
+          "ko": "터무니없는(불합리한)",
+          "en": "completely unreasonable or silly",
+          "bridge": "핵심 그대로",
+          "example": "It's absurd to wear a coat in this heat.",
+          "blank": "It's ____ to wear a coat in this heat."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": null
+    },
+    {
+      "id": "carve",
+      "no": 15,
+      "source": "Day 27",
+      "word": "carve",
+      "pos": "v.",
+      "ipa": "/kɑːrv/",
+      "core": {
+        "ko": "칼로 깎아 모양을 내다",
+        "en": "to cut a shape with a knife"
+      },
+      "senses": [
+        {
+          "ko": "조각하다(새기다)",
+          "en": "to cut a shape into wood or stone",
+          "bridge": "핵심 그대로",
+          "example": "He carved a small bird out of wood.",
+          "blank": "He ____ a small bird out of wood."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "curve(곡선)와 a/u만 다르다. c-a-rve는 깎기, c-u-rve는 휘기."
+    },
+    {
+      "id": "curve",
+      "no": 16,
+      "source": "Day 27",
+      "word": "curve",
+      "pos": "n.",
+      "ipa": "/kɜːrv/",
+      "core": {
+        "ko": "휘어진 선",
+        "en": "a line that bends"
+      },
+      "senses": [
+        {
+          "ko": "곡선(커브)",
+          "en": "a smooth bending line or shape",
+          "bridge": "핵심 그대로",
+          "example": "The road has a sharp curve near the hill.",
+          "blank": "The road has a sharp ____ near the hill."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": null
+    },
+    {
+      "id": "complement",
+      "no": 17,
+      "source": "Day 27",
+      "word": "complement",
+      "pos": "n. / v.",
+      "ipa": "/ˈkɑːmplɪmənt/",
+      "core": {
+        "ko": "모자란 것을 채워 완전하게 하다",
+        "en": "to fill what is missing and make it complete"
+      },
+      "senses": [
+        {
+          "ko": "보완(보충)",
+          "en": "something that makes another thing complete",
+          "bridge": "채워 주는 것이면(명사)",
+          "example": "Rice is a good complement to the spicy stew.",
+          "blank": "Rice is a good ____ to the spicy stew."
+        },
+        {
+          "ko": "보완하다",
+          "en": "to go well with and complete something",
+          "bridge": "채워 주면(동사)",
+          "example": "The red scarf complements her black coat.",
+          "blank": "The red scarf ____ her black coat."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "complete(완전한)와 같은 뿌리(com + plere 채우다). compliment(칭찬)는 가운데가 i."
+    },
+    {
+      "id": "compliment",
+      "no": 18,
+      "source": "Day 27",
+      "word": "compliment",
+      "pos": "n. / v.",
+      "ipa": "/ˈkɑːmplɪmənt/",
+      "core": {
+        "ko": "좋은 말을 건네다",
+        "en": "to say something nice to someone"
+      },
+      "senses": [
+        {
+          "ko": "칭찬",
+          "en": "something nice you say about someone",
+          "bridge": "건넨 좋은 말이면(명사)",
+          "example": "She gave me a compliment on my drawing.",
+          "blank": "She gave me a ____ on my drawing."
+        },
+        {
+          "ko": "칭찬하다",
+          "en": "to say something nice about someone",
+          "bridge": "좋은 말을 건네면(동사)",
+          "example": "The teacher complimented him on his neat work.",
+          "blank": "The teacher ____ him on his neat work."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": null
+    },
+    {
+      "id": "respectable",
+      "no": 19,
+      "source": "Day 27",
+      "word": "respectable",
+      "pos": "a.",
+      "ipa": "/rɪˈspektəbl/",
+      "core": {
+        "ko": "존경받을 만한",
+        "en": "deserving respect"
+      },
+      "senses": [
+        {
+          "ko": "존경할 만한",
+          "en": "good enough to be respected",
+          "bridge": "핵심 그대로",
+          "example": "He grew up to be a respectable doctor.",
+          "blank": "He grew up to be a ____ doctor."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "respect(존경)에서. -able은 '존경할 만한', -ive는 '각자의'로 뜻이 멀어졌다."
+    },
+    {
+      "id": "respective",
+      "no": 20,
+      "source": "Day 27",
+      "word": "respective",
+      "pos": "a.",
+      "ipa": "/rɪˈspektɪv/",
+      "core": {
+        "ko": "저마다 따로인",
+        "en": "belonging to each one separately"
+      },
+      "senses": [
+        {
+          "ko": "각각의",
+          "en": "relating to each of the people or things mentioned",
+          "bridge": "핵심 그대로",
+          "example": "The twins went back to their respective rooms.",
+          "blank": "The twins went back to their ____ rooms."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": null
+    },
+    {
+      "id": "principal",
+      "no": 21,
+      "source": "Day 27",
+      "word": "principal",
+      "pos": "n. / a.",
+      "ipa": "/ˈprɪnsəpl/",
+      "core": {
+        "ko": "맨 앞에 서는",
+        "en": "standing first"
+      },
+      "senses": [
+        {
+          "ko": "교장(우두머리)",
+          "en": "the head of a school",
+          "bridge": "맨 앞에 선 사람이면(명사)",
+          "example": "The principal gave a speech at the ceremony.",
+          "blank": "The ____ gave a speech at the ceremony."
+        },
+        {
+          "ko": "주요한(중요한)",
+          "en": "most important",
+          "bridge": "맨 앞에 오는 것이면(형용사)",
+          "example": "Rice is the principal food in many countries.",
+          "blank": "Rice is the ____ food in many countries."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "principle(원칙)과 발음이 같다. 사람·형용사는 -pal(pal은 친구), 규칙은 -ple."
+    },
+    {
+      "id": "principle",
+      "no": 22,
+      "source": "Day 27",
+      "word": "principle",
+      "pos": "n.",
+      "ipa": "/ˈprɪnsəpl/",
+      "core": {
+        "ko": "모든 것의 바탕이 되는 규칙",
+        "en": "a basic rule that everything rests on"
+      },
+      "senses": [
+        {
+          "ko": "원칙(원리, 신념)",
+          "en": "a basic rule or belief that guides how you act",
+          "bridge": "핵심 그대로",
+          "example": "Honesty is an important principle in our family.",
+          "blank": "Honesty is an important ____ in our family."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": null
+    },
+    {
+      "id": "acquire",
+      "no": 23,
+      "source": "Day 27",
+      "word": "acquire",
+      "pos": "v.",
+      "ipa": "/əˈkwaɪər/",
+      "core": {
+        "ko": "구해서 내 것으로 만들다",
+        "en": "to seek something and make it yours"
+      },
+      "senses": [
+        {
+          "ko": "얻다(획득하다, 습득하다)",
+          "en": "to get something, often by effort over time",
+          "bridge": "핵심 그대로",
+          "example": "She acquired a new skill at camp.",
+          "blank": "She ____ a new skill at camp."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "quire(구하다) 삼형제: ac(~에게) 구해 얻다, in(안으로) 들어가 묻다, re(다시) 구해 요구하다."
+    },
+    {
+      "id": "inquire",
+      "no": 24,
+      "source": "Day 27",
+      "word": "inquire",
+      "pos": "v.",
+      "ipa": "/ɪnˈkwaɪər/",
+      "core": {
+        "ko": "안으로 들어가 알아보다",
+        "en": "to go in and find out"
+      },
+      "senses": [
+        {
+          "ko": "묻다",
+          "en": "to ask for information",
+          "bridge": "핵심 그대로",
+          "example": "I inquired about the price of the ticket.",
+          "blank": "I ____ about the price of the ticket."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": null
+    },
+    {
+      "id": "require",
+      "no": 25,
+      "source": "Day 27",
+      "word": "require",
+      "pos": "v.",
+      "ipa": "/rɪˈkwaɪər/",
+      "core": {
+        "ko": "꼭 있어야 해서 다시 구하다",
+        "en": "to seek again because you must have it"
+      },
+      "senses": [
+        {
+          "ko": "필요로 하다(요구하다)",
+          "en": "to need something, or to say that it must be done",
+          "bridge": "핵심 그대로",
+          "example": "This plant requires a lot of sunlight.",
+          "blank": "This plant ____ a lot of sunlight."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": null
+    },
+    {
+      "id": "lie1",
+      "no": 26,
+      "source": "Day 27",
+      "word": "lie",
+      "pos": "v. / n.",
+      "ipa": "/laɪ/",
+      "core": {
+        "ko": "사실이 아닌 말을 하다",
+        "en": "to say something that is not true"
+      },
+      "senses": [
+        {
+          "ko": "거짓말하다",
+          "en": "to say something you know is not true",
+          "bridge": "핵심 그대로(동사)",
+          "example": "Don't lie to your parents.",
+          "blank": "Don't ____ to your parents."
+        },
+        {
+          "ko": "거짓말",
+          "en": "something said that is not true",
+          "bridge": "그런 말 자체면(명사)",
+          "example": "He told a lie about his homework.",
+          "blank": "He told a ____ about his homework."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "lie-lied-lied. 눕다(lie-lay-lain)와는 다른 단어인데 철자만 같다."
+    },
+    {
+      "id": "lie2",
+      "no": 27,
+      "source": "Day 27",
+      "word": "lie",
+      "pos": "v.",
+      "ipa": "/laɪ/",
+      "core": {
+        "ko": "몸을 평평하게 두다",
+        "en": "to put your body flat"
+      },
+      "senses": [
+        {
+          "ko": "눕다",
+          "en": "to be flat on a surface like a bed",
+          "bridge": "핵심 그대로",
+          "example": "I like to lie on the grass and watch clouds.",
+          "blank": "I like to ____ on the grass and watch clouds."
+        },
+        {
+          "ko": "(~에) 있다",
+          "en": "to be in a certain place",
+          "bridge": "물건이나 마을이 누워 있으면",
+          "example": "The village lies at the foot of the mountain.",
+          "blank": "The village ____ at the foot of the mountain."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "lie-lay-lain. 과거형 lay가 '놓다(lay-laid-laid)'의 현재형과 겹쳐 헷갈린다."
+    },
+    {
+      "id": "lay",
+      "no": 28,
+      "source": "Day 27",
+      "word": "lay",
+      "pos": "v.",
+      "ipa": "/leɪ/",
+      "core": {
+        "ko": "무언가를 내려놓다",
+        "en": "to put something down"
+      },
+      "senses": [
+        {
+          "ko": "놓다(두다)",
+          "en": "to put something down carefully",
+          "bridge": "핵심 그대로",
+          "example": "Lay the book on the desk.",
+          "blank": "____ the book on the desk."
+        },
+        {
+          "ko": "(알을) 낳다",
+          "en": "to produce an egg",
+          "bridge": "알을 내려놓으면",
+          "example": "Our hen lays an egg every morning.",
+          "blank": "Our hen ____ an egg every morning."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "lay-laid-laid. 뒤에 목적어(무엇을)가 온다. 눕다(lie)는 목적어가 없다."
+    },
+    {
+      "id": "imitate",
+      "no": 29,
+      "source": "Day 27",
+      "word": "imitate",
+      "pos": "v.",
+      "ipa": "/ˈɪmɪteɪt/",
+      "core": {
+        "ko": "남이 하는 대로 따라 하다",
+        "en": "to do the same as someone else"
+      },
+      "senses": [
+        {
+          "ko": "모방하다(흉내 내다)",
+          "en": "to copy what someone does or says",
+          "bridge": "핵심 그대로",
+          "example": "The parrot imitates my voice perfectly.",
+          "blank": "The parrot ____ my voice perfectly."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "initiate(시작하다)와 m/n만 다르다. i-m-itate는 따라 하기, i-n-itiate는 '안으로(in) 들어가' 시작하기."
+    },
+    {
+      "id": "initiate",
+      "no": 30,
+      "source": "Day 27",
+      "word": "initiate",
+      "pos": "v.",
+      "ipa": "/ɪˈnɪʃieɪt/",
+      "core": {
+        "ko": "첫발을 들여놓다",
+        "en": "to take the first step into something"
+      },
+      "senses": [
+        {
+          "ko": "시작하다(개시하다)",
+          "en": "to make something begin",
+          "bridge": "핵심 그대로",
+          "example": "The mayor initiated a plan to clean the river.",
+          "blank": "The mayor ____ a plan to clean the river."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": null
+    },
+    {
+      "id": "defeat",
+      "source": "Day 27",
+      "word": "defeat",
+      "pos": "v. / n.",
+      "ipa": "/dɪˈfiːt/",
+      "core": {
+        "ko": "싸움에서 이겨 상대를 무너뜨리다",
+        "en": "to win and bring the other side down"
+      },
+      "senses": [
+        {
+          "ko": "패배시키다",
+          "en": "to win against someone",
+          "bridge": "핵심 그대로(동사)",
+          "example": "Our team defeated the champions.",
+          "blank": "Our team ____ the champions."
+        },
+        {
+          "ko": "패배",
+          "en": "losing a game or fight",
+          "bridge": "무너진 결과면(명사)",
+          "example": "The team was sad after the defeat.",
+          "blank": "The team was sad after the ____."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "defect(결함)와 끝 철자 -eat/-ect 구별. de-feat는 '해낸 것(feat)을 무너뜨리다'.",
+      "no": 31
+    },
+    {
+      "id": "defect",
+      "source": "Day 27",
+      "word": "defect",
+      "pos": "n.",
+      "ipa": "/ˈdiːfekt/",
+      "core": {
+        "ko": "만들 때 빠진 것",
+        "en": "something missing from when it was made"
+      },
+      "senses": [
+        {
+          "ko": "결함(결점)",
+          "en": "a fault in something",
+          "bridge": "핵심 그대로",
+          "example": "The toy was returned because of a defect.",
+          "blank": "The toy was returned because of a ____."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "de(떨어져) + fect(만들다): 만들 때 빠진 것.",
+      "no": 32
+    },
+    {
+      "id": "frame",
+      "source": "Day 27",
+      "word": "frame",
+      "pos": "n.",
+      "ipa": "/freɪm/",
+      "core": {
+        "ko": "모양을 잡아 주는 뼈대",
+        "en": "the structure that gives something its shape"
+      },
+      "senses": [
+        {
+          "ko": "뼈대(틀, 액자)",
+          "en": "the structure that holds something, such as a picture",
+          "bridge": "핵심 그대로",
+          "example": "I put the photo in a wooden frame.",
+          "blank": "I put the photo in a wooden ____."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "flame(불꽃)과 r/l만 다르다. f-r-ame은 틀, f-l-ame은 불.",
+      "no": 33
+    },
+    {
+      "id": "flame",
+      "source": "Day 27",
+      "word": "flame",
+      "pos": "n.",
+      "ipa": "/fleɪm/",
+      "core": {
+        "ko": "타오르는 불의 빛나는 부분",
+        "en": "the bright burning part of a fire"
+      },
+      "senses": [
+        {
+          "ko": "불길(불꽃)",
+          "en": "the hot bright gas you see in a fire",
+          "bridge": "핵심 그대로",
+          "example": "The candle flame danced in the wind.",
+          "blank": "The candle ____ danced in the wind."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": null,
+      "no": 34
+    },
+    {
+      "id": "successive",
+      "source": "Day 27",
+      "word": "successive",
+      "pos": "a.",
+      "ipa": "/səkˈsesɪv/",
+      "core": {
+        "ko": "하나 뒤에 하나가 따라오는",
+        "en": "one coming right after another"
+      },
+      "senses": [
+        {
+          "ko": "잇따른(연속하는)",
+          "en": "coming one after another without a break",
+          "bridge": "핵심 그대로",
+          "example": "It rained for five successive days.",
+          "blank": "It rained for five ____ days."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "succeed에는 '뒤따르다'와 '성공하다' 두 뜻이 있다. -ive는 뒤따름, -ful은 성공.",
+      "no": 35
+    },
+    {
+      "id": "successful",
+      "source": "Day 27",
+      "word": "successful",
+      "pos": "a.",
+      "ipa": "/səkˈsesfl/",
+      "core": {
+        "ko": "바라던 결과를 얻은",
+        "en": "getting the result you wanted"
+      },
+      "senses": [
+        {
+          "ko": "성공적인",
+          "en": "achieving what you wanted",
+          "bridge": "핵심 그대로",
+          "example": "The concert was a successful event.",
+          "blank": "The concert was a ____ event."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": null,
+      "no": 36
+    },
+    {
+      "id": "cooperation",
+      "source": "Day 27",
+      "word": "cooperation",
+      "pos": "n.",
+      "ipa": "/koʊˌɑːpəˈreɪʃn/",
+      "core": {
+        "ko": "함께 일하기",
+        "en": "working together"
+      },
+      "senses": [
+        {
+          "ko": "협동(협력, 협조)",
+          "en": "working together to get something done",
+          "bridge": "핵심 그대로",
+          "example": "The project needs cooperation from everyone.",
+          "blank": "The project needs ____ from everyone."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "co(함께) + operation(일). corporation은 corpus(몸)에서 온 '한 몸 같은 단체'.",
+      "no": 37
+    },
+    {
+      "id": "corporation",
+      "source": "Day 27",
+      "word": "corporation",
+      "pos": "n.",
+      "ipa": "/ˌkɔːrpəˈreɪʃn/",
+      "core": {
+        "ko": "한 몸처럼 묶인 큰 단체",
+        "en": "a large group joined like one body"
+      },
+      "senses": [
+        {
+          "ko": "기업(회사, 법인, 조합)",
+          "en": "a large company or organization",
+          "bridge": "핵심 그대로",
+          "example": "She works for a big corporation in Seoul.",
+          "blank": "She works for a big ____ in Seoul."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": null,
+      "no": 38
+    },
+    {
+      "id": "call for",
+      "source": "Day 27",
+      "word": "call for",
+      "pos": "phr.",
+      "ipa": "/kɔːl fɔːr/",
+      "core": {
+        "ko": "달라고 외치다",
+        "en": "to shout that you want something"
+      },
+      "senses": [
+        {
+          "ko": "~을 요구하다(요청하다, 필요로 하다)",
+          "en": "to demand or need something",
+          "bridge": "핵심 그대로",
+          "example": "The students called for a longer lunch break.",
+          "blank": "The students ____ a longer lunch break."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": "call for는 '달라고' 부르기, call off는 '그만' 하고 떼어 내기.",
+      "no": 39
+    },
+    {
+      "id": "call off",
+      "source": "Day 27",
+      "word": "call off",
+      "pos": "phr.",
+      "ipa": "/kɔːl ɔːf/",
+      "core": {
+        "ko": "그만하라고 외쳐 떼어 내다",
+        "en": "to shout stop and take it away"
+      },
+      "senses": [
+        {
+          "ko": "중지하다(취소하다)",
+          "en": "to cancel something that was planned",
+          "bridge": "핵심 그대로",
+          "example": "They called off the game because of rain.",
+          "blank": "They ____ the game because of rain."
+        }
+      ],
+      "koGenerated": false,
+      "image": null,
+      "etymology": null,
+      "no": 40
+    }
+  ]
+}
