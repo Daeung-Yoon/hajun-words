@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && tsx scripts/clean-dist.ts && vite build",
     "preview": "vite preview",
     "test": "vitest",
     "validate": "tsx scripts/validate.ts",
