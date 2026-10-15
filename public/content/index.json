@@ -7,22 +7,10 @@
       "wordCount": 10
     },
     {
-      "id": "wm-day20",
-      "title": "Word Master Day 20",
-      "file": "banks/wm-day20.json",
-      "wordCount": 20
-    },
-    {
-      "id": "wm-day26",
-      "title": "Word Master Day 26",
-      "file": "banks/wm-day26.json",
-      "wordCount": 40
-    },
-    {
-      "id": "wm-day27",
-      "title": "Word Master Day 27",
-      "file": "banks/wm-day27.json",
-      "wordCount": 40
+      "id": "wordmaster",
+      "title": "Word Master 고등 BASIC",
+      "file": "banks/wordmaster.json",
+      "wordCount": 100
     }
   ]
 }

@@ -11,7 +11,7 @@
 
 ### PC에서 (Google Drive 로 사진 보내기)
 1. 폰 Google Drive 앱에서 단어장 사진을 `내 드라이브/하준단어장/inbox/` 에 올린다. (PC에 직접 넣을 때는 `photos/inbox/`)
-2. PC에서 Drive for Desktop 이 켜져 있는지 확인하고, Claude Code에서 `/add-words --bank <뱅크id>` 실행. Drive 사진을 자동으로 가져와 추출 목록을 보여 주면 확인하고 승인한다.
+2. PC에서 Drive for Desktop 이 켜져 있는지 확인하고, Claude Code에서 `/add-words --bank <뱅크id>` 실행. (Word Master 고등 BASIC 교재는 `--bank wordmaster`. Day는 뱅크 안에서 "Day로 고르기"로 선택한다.) Drive 사진을 자동으로 가져와 추출 목록을 보여 주면 확인하고 승인한다.
 3. 끝나면 처리한 사진은 Drive 에서도 `하준단어장/done/` 으로 옮겨진다.
 4. `git add -A && git commit -m "content: Day N~M" && git push` → 1~2분 뒤 배포.
 
