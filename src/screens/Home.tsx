@@ -31,7 +31,7 @@ export default function Home() {
   const endDay = range ? days.find((d) => d.to === range.to)?.label ?? '' : ''
 
   const apply = async (from: number, to: number) => {
-    await selectRange({ bankId: bank.id, from, to, name: rangeName(bank, from, to, new Date()) })
+    await selectRange({ bankId: bank.id, from, to, name: rangeName(bank, from, to) })
     await refreshRange()
   }
   const pickStart = (label: string) => {
@@ -73,7 +73,7 @@ export default function Home() {
         </div>
         {hasRange && range ? (
           <div className="row" style={{ justifyContent: 'space-between' }}>
-            <strong>{range.name}</strong><span className="muted">{total}단어</span>
+            <strong>{rangeName(bank, range.from, range.to)}</strong><span className="muted">{total}단어</span>
           </div>
         ) : (
           <p className="muted" style={{ margin: 0 }}>Day를 골라 주세요</p>

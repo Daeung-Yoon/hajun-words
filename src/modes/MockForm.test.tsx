@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import MockForm from './MockForm'
 import type { Word } from '../content/schema'
@@ -51,5 +51,45 @@ describe('MockForm', () => {
     await userEvent.click(screen.getByRole('button', { name: '채점하기' }))
     expect(confirm).not.toHaveBeenCalled()
     expect(onSubmit).toHaveBeenCalledWith({ bank: ['은행'] })
+  })
+})
+
+describe('MockForm speech input', () => {
+  class FakeRecognition {
+    static last: FakeRecognition | null = null
+    lang = ''
+    interimResults = true
+    maxAlternatives = 3
+    onresult: ((e: { results: { 0: { 0: { transcript: string } } } }) => void) | null = null
+    onend: (() => void) | null = null
+    onerror: (() => void) | null = null
+    started = 0
+    constructor() { FakeRecognition.last = this }
+    start() { this.started++ }
+    stop() { this.onend?.() }
+    abort() { this.onend?.() }
+  }
+
+  it('shows a mic button per answer that fills the field with what was heard', async () => {
+    ;(window as unknown as { SpeechRecognition: unknown }).SpeechRecognition = FakeRecognition
+    try {
+      render(<MockForm words={words()} onSubmit={vi.fn()} />)
+      await userEvent.click(screen.getByRole('button', { name: 'run 뜻 2 말하기' }))
+      const rec = FakeRecognition.last!
+      expect(rec.started).toBe(1)
+      expect(rec.lang).toBe('ko-KR')
+      expect(screen.getByRole('button', { name: 'run 뜻 2 말하기' })).toHaveAttribute('aria-pressed', 'true')
+      act(() => { rec.onresult?.({ results: { 0: { 0: { transcript: '흐르다.' } } } }); rec.onend?.() })
+      expect(screen.getByLabelText('run 뜻 2')).toHaveValue('흐르다')
+      expect(screen.getByLabelText('run 뜻 1')).toHaveValue('')
+      expect(screen.getByRole('button', { name: 'run 뜻 2 말하기' })).toHaveAttribute('aria-pressed', 'false')
+    } finally {
+      delete (window as unknown as { SpeechRecognition?: unknown }).SpeechRecognition
+    }
+  })
+
+  it('hides mic buttons when the browser cannot listen', () => {
+    render(<MockForm words={words()} onSubmit={vi.fn()} />)
+    expect(screen.queryByRole('button', { name: /말하기/ })).not.toBeInTheDocument()
   })
 })

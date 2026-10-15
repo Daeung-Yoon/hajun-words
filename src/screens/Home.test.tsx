@@ -40,7 +40,7 @@ describe('Home', () => {
     await waitFor(() => expect(refreshRange).toHaveBeenCalled())
     const cur = await getCurrentRange()
     expect(cur).toMatchObject({ bankId: 'b', from: 3, to: 4 })
-    expect(cur?.name).toMatch(/Day 2$/)
+    expect(cur?.name).toBe('Day 2')
   })
 
   it('picking the same Day twice keeps one range record', async () => {
@@ -55,7 +55,8 @@ describe('Home', () => {
   it('shows the range name and word count without level stats once a range is set', () => {
     renderHome({ range: { id: 1, name: '10/15 Day 2', bankId: 'b', from: 3, to: 4, createdAt: 0, mockBest: null, academyScore: null },
       rangeWords: [w('c', 3, 'Day 2'), w('d', 4, 'Day 2')] })
-    expect(screen.getByText('10/15 Day 2')).toBeInTheDocument()
+    expect(screen.getByText('Day 2', { selector: 'strong' })).toBeInTheDocument()
+    expect(screen.queryByText(/10\/15/)).not.toBeInTheDocument()
     expect(screen.getByText(/2단어/)).toBeInTheDocument()
     expect(screen.getByLabelText('시작')).toHaveValue('Day 2')
     expect(screen.queryByText(/확실|익숙|모름|연속/)).not.toBeInTheDocument()

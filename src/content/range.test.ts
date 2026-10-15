@@ -20,12 +20,11 @@ describe('wordsInRange', () => {
   })
 })
 describe('rangeName', () => {
-  const d = new Date(2026, 9, 15)
-  it('uses day labels when the range matches whole days', () => {
-    expect(rangeName(bank, 1, 4, d)).toBe('10/15 Day 1~2')
-    expect(rangeName(bank, 3, 4, d)).toBe('10/15 Day 2')
+  it('uses day labels without a date when the range matches whole days', () => {
+    expect(rangeName(bank, 1, 4)).toBe('Day 1~2')
+    expect(rangeName(bank, 3, 4)).toBe('Day 2')
   })
   it('falls back to word numbers', () => {
-    expect(rangeName(bank, 2, 3, d)).toBe('10/15 단어 2~3')
+    expect(rangeName(bank, 2, 3)).toBe('단어 2~3')
   })
 })

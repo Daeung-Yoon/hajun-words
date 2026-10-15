@@ -19,14 +19,13 @@ export function wordsInRange(bank: Bank, from: number, to: number): Word[] {
   return bank.words.filter((w) => w.no >= from && w.no <= to).sort((a, b) => a.no - b.no)
 }
 
-export function rangeName(bank: Bank, from: number, to: number, date: Date): string {
-  const prefix = `${date.getMonth() + 1}/${date.getDate()}`
+export function rangeName(bank: Bank, from: number, to: number): string {
   const days = daysOf(bank)
   const first = days.find((d) => d.from === from)
   const last = days.find((d) => d.to === to)
   if (first && last) {
     const a = first.label, b = last.label
-    return a === b ? `${prefix} ${a}` : `${prefix} ${a}~${b.replace(/^Day\s*/i, '')}`
+    return a === b ? a : `${a}~${b.replace(/^Day\s*/i, '')}`
   }
-  return from === to ? `${prefix} 단어 ${from}` : `${prefix} 단어 ${from}~${to}`
+  return from === to ? `단어 ${from}` : `단어 ${from}~${to}`
 }
