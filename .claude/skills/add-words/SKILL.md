@@ -1,15 +1,26 @@
 ---
 name: add-words
-description: photos/inbox/ 의 단어장 사진을 읽어 단어·뜻을 추출하고, 핵심 의미·파생 가지·예문·영영 뜻을 생성해 뱅크 JSON에 병합한다. "/add-words --bank <id> [--title <제목>]" 로 호출.
+description: 대화에 첨부된 단어장 사진 또는 photos/inbox/ 의 사진을 읽어 단어·뜻을 추출하고, 핵심 의미·파생 가지·예문·영영 뜻을 생성해 뱅크 JSON에 병합한다. "/add-words --bank <id> [--title <제목>]" 로 호출. 폰에서는 claude.ai/code 에 사진을 첨부해 실행한다.
 ---
 
 # /add-words
 
 인자: `--bank <뱅크id>` (필수), `--title "<제목>"` (새 뱅크일 때). 인자가 없으면 먼저 물어본다.
 
+## 0. 사진 입력 경로
+
+사진은 두 곳 중 하나에서 온다. 둘 다 있으면 첨부 사진을 먼저, 그다음 `photos/inbox/` 순으로 처리한다.
+
+| 경로 | 언제 | 순서 |
+|------|------|------|
+| 대화에 첨부된 이미지 | 폰·웹(claude.ai/code)에서 실행할 때 | 첨부한 순서 |
+| `photos/inbox/` 파일 | PC에서 실행할 때 | 파일명 순 |
+
+첨부 사진은 저장소에 쓰지 않는다(교재 저작권). 둘 다 없으면 "사진을 첨부하거나 photos/inbox/ 에 넣어 주세요"라고 안내하고 멈춘다.
+
 ## 1. 추출
 
-1. `photos/inbox/` 의 이미지 파일을 파일명 순으로 Read 도구로 읽는다.
+1. 0단계의 순서대로 사진을 읽는다. `photos/inbox/` 파일은 Read 도구로 읽는다.
 2. 각 사진에서 **단어, 품사, 교재에 적힌 한국어 뜻(순서 그대로), Day/페이지 라벨**을 추출한다. 라벨이 안 보이면 직전 사진의 라벨을 잇는다.
 3. 결과를 아래 표로 보여주고 **멈춘다**. 사용자가 승인하기 전에는 다음 단계로 가지 않는다.
 
@@ -43,6 +54,7 @@ npm run merge -- --bank <id> [--title "<제목>"] content-work/chunk-<n>.json
 ## 4. 마무리
 
 1. 요약을 보여준다: 추가된 단어 수, 뜻 개수 분포(1개/2개/3개/4개+), 무작위 3개 샘플의 트리(핵심 → 가지).
-2. `photos/inbox/*` 를 `photos/done/` 로 옮긴다. `content-work/chunk-*.json` 은 지운다.
-3. 커밋·푸시는 사용자에게 맡긴다. 명령을 안내한다:
-   `git add -A && git commit -m "content: <라벨 범위>" && git push`
+2. `photos/inbox/` 에서 읽은 사진만 `photos/done/` 로 옮긴다(첨부 사진은 옮길 것이 없다). `content-work/chunk-*.json` 은 지운다.
+3. 커밋·푸시:
+   - PC에서 실행 중이면 사용자에게 맡기고 명령을 안내한다: `git add -A && git commit -m "content: <라벨 범위>" && git push`
+   - 웹(claude.ai/code)에서 실행 중이면 사용자가 "푸시해"라고 승인한 뒤 `public/content/` 만 스테이징해 같은 메시지로 커밋·푸시한다. 푸시 후 1~2분이면 배포된다고 알려 준다.
