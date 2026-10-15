@@ -147,11 +147,24 @@ describe('describeListenError', () => {
     expect(text).toMatch(/키보드/)
     expect(describeListenError('no-speech')).toBe(text)
   })
+  it('tells the child to say "정답 곰" when the recognizer rejects a short answer', () => {
+    expect(describeListenError('no-match')).toMatch(/정답 곰/)
+  })
 })
 
 describe('helpers', () => {
   it('joinTranscript concatenates result pieces', () => {
     expect(joinTranscript({ results: { length: 2, 0: { 0: { transcript: '달리' } }, 1: { 0: { transcript: '다' } } } })).toBe('달리다')
+  })
+  it('tidyHeard strips the "정답" lead-in and polite endings so one-syllable answers survive', () => {
+    expect(tidyHeard('정답 곰')).toBe('곰')
+    expect(tidyHeard('정답은 곰이에요.')).toBe('곰')
+    expect(tidyHeard('곰입니다')).toBe('곰')
+    expect(tidyHeard('곰이요')).toBe('곰')
+    expect(tidyHeard('곰 요')).toBe('곰')
+    expect(tidyHeard('견디다')).toBe('견디다')
+    expect(tidyHeard('필요')).toBe('필요')
+    expect(tidyHeard('정답')).toBe('')
   })
   it('tidyHeard strips trailing punctuation and spaces', () => {
     expect(tidyHeard(' 달리다. ')).toBe('달리다')

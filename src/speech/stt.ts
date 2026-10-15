@@ -72,8 +72,8 @@ export function describeListenError(code: string): string {
     case 'not-allowed':
     case 'service-not-allowed': return '마이크 권한을 허용해 주세요. 주소창 옆 자물쇠에서 바꿀 수 있어요.'
     case 'no-speech':
-    case 'no-match':
     case 'silent-end': return '말소리를 못 들었어요. 버튼을 누른 뒤 바로 말해 주세요. 키보드의 🎤 버튼으로도 말할 수 있어요.'
+    case 'no-match': return '짧은 말은 못 알아들어요. "정답 곰"처럼 앞에 "정답"을 붙여 말해 주세요.'
     case 'audio-capture': return '마이크를 찾지 못했어요.'
     case 'network': return '음성 인식에 인터넷이 필요해요.'
     case 'aborted': return ''
@@ -182,5 +182,15 @@ export function listen(
   return () => { try { rec?.abort() } catch { /* 이미 끝남 */ } finish('aborted') }
 }
 
-/** 음성 인식 결과를 답안 칸에 넣기 좋게 다듬는다: 앞뒤 공백·마침표 제거. */
-export const tidyHeard = (text: string) => text.trim().replace(/[.。!?]+$/u, '').trim()
+/**
+ * 음성 인식 결과를 답안 칸에 넣기 좋게 다듬는다.
+ * 안드로이드 인식기는 "곰" 같은 한 글자 발화를 no-match 로 버리므로 아이가 "정답 곰", "곰이요",
+ * "곰입니다"처럼 길게 말하게 하고, 여기서 앞말("정답(은)")과 존댓말 꼬리를 뗀다. 끝의 마침표도 뗀다.
+ * 꼬리 없는 "요"는 "필요"처럼 단어의 일부일 수 있어 앞에 띄어쓰기가 있을 때만 뗀다.
+ */
+export function tidyHeard(text: string): string {
+  let s = text.trim().replace(/[.。!?]+$/u, '').trim()
+  s = s.replace(/^(정답은|정답|뜻은)\s*/u, '')
+  s = s.replace(/(입니다|이에요|예요|이요|이야|\s요)$/u, '')
+  return s.trim()
+}

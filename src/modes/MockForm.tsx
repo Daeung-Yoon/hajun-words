@@ -59,7 +59,7 @@ export default function MockForm({ words, onSubmit, submitting = false }: Props)
             const on = listening === key
             return (
               <div className="row" key={i}>
-                <input className="input" style={{ flex: 1 }} aria-label={`${w.word} 뜻 ${i + 1}`} placeholder={on ? '듣고 있어요…' : `뜻 ${i + 1}`}
+                <input className="input" style={{ flex: 1 }} aria-label={`${w.word} 뜻 ${i + 1}`} placeholder={on ? '"정답 곰"처럼 말해요…' : `뜻 ${i + 1}`}
                   enterKeyHint={w.id === lastId && i === w.senses.length - 1 ? 'done' : 'next'}
                   value={answers[w.id][i]} onChange={(e) => set(w.id, i, e.target.value)} onKeyDown={nextOnEnter} />
                 {mic && (
