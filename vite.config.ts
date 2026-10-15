@@ -26,7 +26,7 @@ export default defineConfig({
           {
             urlPattern: ({ url }: { url: URL }) => url.pathname.startsWith('/hajun-words/content/'),
             handler: 'NetworkFirst',
-            options: { cacheName: 'content', expiration: { maxEntries: 50 } },
+            options: { cacheName: 'content', networkTimeoutSeconds: 3, expiration: { maxEntries: 50 } },
           },
         ],
       },
