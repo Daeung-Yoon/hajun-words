@@ -60,7 +60,7 @@ describe('MockForm speech input', () => {
     lang = ''
     interimResults = true
     maxAlternatives = 3
-    onresult: ((e: { results: { 0: { 0: { transcript: string } } } }) => void) | null = null
+    onresult: ((e: { results: ArrayLike<{ 0: { transcript: string }; isFinal?: boolean }> }) => void) | null = null
     onend: (() => void) | null = null
     onerror: ((e: { error: string }) => void) | null = null
     started = 0
@@ -79,7 +79,9 @@ describe('MockForm speech input', () => {
       expect(rec.started).toBe(1)
       expect(rec.lang).toBe('ko-KR')
       expect(screen.getByRole('button', { name: 'run 뜻 2 말하기' })).toHaveAttribute('aria-pressed', 'true')
-      act(() => { rec.onresult?.({ results: { 0: { 0: { transcript: '흐르다.' } } } }); rec.onend?.() })
+      act(() => { rec.onresult?.({ results: { length: 1, 0: { 0: { transcript: '흐르' }, isFinal: false } } }) })
+      expect(screen.getByLabelText('run 뜻 2')).toHaveValue('흐르')
+      act(() => { rec.onresult?.({ results: { length: 1, 0: { 0: { transcript: '흐르다.' }, isFinal: true } } }); rec.onend?.() })
       expect(screen.getByLabelText('run 뜻 2')).toHaveValue('흐르다')
       expect(screen.getByLabelText('run 뜻 1')).toHaveValue('')
       expect(screen.getByRole('button', { name: 'run 뜻 2 말하기' })).toHaveAttribute('aria-pressed', 'false')
@@ -98,7 +100,7 @@ describe('MockForm speech input', () => {
       expect(screen.getByText(/마이크 권한/)).toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'bank 뜻 1 말하기' })).toHaveAttribute('aria-pressed', 'false')
       await userEvent.click(screen.getByRole('button', { name: 'bank 뜻 1 말하기' }))
-      act(() => { FakeRecognition.last!.onerror?.({ error: 'no-speech' }); FakeRecognition.last!.onend?.() })
+      act(() => { FakeRecognition.last!.onend?.() })
       expect(screen.getByText(/못 들었어요/)).toBeInTheDocument()
     } finally {
       delete (window as unknown as { SpeechRecognition?: unknown }).SpeechRecognition
