@@ -6,6 +6,7 @@ import Range from '../screens/Range'
 import Tree from '../modes/Tree'
 import QuizScreen from '../modes/QuizScreen'
 import MockExam from '../modes/MockExam'
+import Stats from '../screens/Stats'
 
 export default function App() {
   return (
@@ -17,7 +18,7 @@ export default function App() {
         <Route path="/blank" element={<QuizScreen mode="blank" />} />
         <Route path="/pick" element={<QuizScreen mode="pick" />} />
         <Route path="/mock" element={<MockExam />} />
-        <Route path="/stats" element={<Placeholder title="기록" />} />
+        <Route path="/stats" element={<Stats />} />
         <Route path="/settings" element={<Placeholder title="설정" />} />
       </Routes>
     </AppProvider>
