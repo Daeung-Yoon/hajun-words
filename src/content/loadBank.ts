@@ -11,7 +11,12 @@ export class BankLoadError extends Error {
 const base = () => `${import.meta.env.BASE_URL}content/`
 
 async function fetchJson(path: string): Promise<unknown> {
-  const res = await fetch(base() + path, { cache: 'no-cache' })
+  let res: Response
+  try {
+    res = await fetch(base() + path, { cache: 'no-cache' })
+  } catch {
+    throw new BankLoadError(`${path} 를 불러올 수 없어요 (네트워크)`, path)
+  }
   if (!res.ok) throw new BankLoadError(`${path} 를 불러올 수 없어요 (${res.status})`, path)
   try {
     return await res.json()
