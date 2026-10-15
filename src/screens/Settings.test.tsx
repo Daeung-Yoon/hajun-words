@@ -37,6 +37,21 @@ describe('Settings', () => {
     expect(await listRanges()).toHaveLength(1)
     vi.restoreAllMocks()
   })
+  it('exports with the link attached to the page and revokes the URL later', async () => {
+    const created = vi.fn(() => 'blob:x')
+    const revoked = vi.fn()
+    Object.assign(URL, { createObjectURL: created, revokeObjectURL: revoked })
+    let attached: boolean | null = null
+    const click = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (this: HTMLAnchorElement) { attached = this.isConnected })
+    renderIt()
+    await userEvent.click(await screen.findByRole('button', { name: /내보내기/ }))
+    await waitFor(() => expect(click).toHaveBeenCalled())
+    expect(attached).toBe(true)
+    expect(document.querySelector('a[download]')).toBeNull()
+    expect(revoked).not.toHaveBeenCalled()
+    await waitFor(() => expect(revoked).toHaveBeenCalledWith('blob:x'), { timeout: 2000 })
+    vi.restoreAllMocks()
+  })
   it('shows imported academy scores instead of stale input values', async () => {
     const id = await createRange({ bankId: 'b', from: 1, to: 2, name: 'r1' })
     await setAcademyScore(id, 70)

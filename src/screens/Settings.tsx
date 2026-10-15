@@ -28,10 +28,13 @@ export default function Settings() {
   const doExport = async () => {
     const blob = new Blob([await exportAll()], { type: 'application/json' })
     const a = document.createElement('a')
-    a.href = URL.createObjectURL(blob)
+    const url = URL.createObjectURL(blob)
+    a.href = url
     a.download = `hajun-words-${new Date().toISOString().slice(0, 10)}.json`
+    document.body.appendChild(a)
     a.click()
-    URL.revokeObjectURL(a.href)
+    a.remove()
+    setTimeout(() => URL.revokeObjectURL(url), 1000)
   }
   const doImport = async (e: ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0]

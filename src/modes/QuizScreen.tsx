@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { useApp } from '../app/AppContext'
 import { buildRound, type Question } from '../study/picker'
@@ -16,6 +16,7 @@ export default function QuizScreen({ mode }: { mode: 'blank' | 'pick' }) {
   const [inputMode, setInputMode] = useState<'choice' | 'typing'>('choice')
   const [result, setResult] = useState<{ correct: number; total: number; up: string[] } | null>(null)
   const [key, setKey] = useState(0)
+  const finishing = useRef(false)
 
   const start = useCallback(async () => {
     if (!bank) return
@@ -30,11 +31,16 @@ export default function QuizScreen({ mode }: { mode: 'blank' | 'pick' }) {
   useEffect(() => { void start() }, [start])
 
   const onFinish = async (correct: number) => {
-    if (!questions || !range) return
-    await recordSession({ mode, rangeId: range.id!, at: Date.now(), correct, total: questions.length })
-    const after = await getStates(questions.map((q) => q.wordId))
-    const up = [...after.values()].filter((s) => s.level > (before.get(s.id)?.level ?? 0)).map((s) => s.id)
-    setResult({ correct, total: questions.length, up })
+    if (!questions || !range || finishing.current) return
+    finishing.current = true
+    try {
+      await recordSession({ mode, rangeId: range.id!, at: Date.now(), correct, total: questions.length })
+      const after = await getStates(questions.map((q) => q.wordId))
+      const up = [...after.values()].filter((s) => s.level > (before.get(s.id)?.level ?? 0)).map((s) => s.id)
+      setResult({ correct, total: questions.length, up })
+    } finally {
+      finishing.current = false
+    }
   }
 
   if (!questions) return <main className="page"><p className="muted">문제를 만드는 중…</p></main>

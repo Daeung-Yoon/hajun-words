@@ -4,9 +4,10 @@ import type { Word } from '../content/schema'
 interface Props {
   words: Word[]
   onSubmit: (answers: Record<string, string[]>) => void
+  submitting?: boolean
 }
 
-export default function MockForm({ words, onSubmit }: Props) {
+export default function MockForm({ words, onSubmit, submitting = false }: Props) {
   const [answers, setAnswers] = useState<Record<string, string[]>>(() =>
     Object.fromEntries(words.map((w) => [w.id, w.senses.map(() => '')])))
   const set = (id: string, i: number, v: string) =>
@@ -39,7 +40,7 @@ export default function MockForm({ words, onSubmit }: Props) {
           ))}
         </div>
       ))}
-      <button type="submit" className="btn btn-primary btn-block">채점하기</button>
+      <button type="submit" className="btn btn-primary btn-block" disabled={submitting}>채점하기</button>
     </form>
   )
 }
