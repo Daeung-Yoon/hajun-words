@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach, vi } from 'vitest'
-import { listen, tidyHeard, joinTranscript, describeListenError, probeAvailability } from './stt'
+import { listen, tidyHeard, joinTranscript, describeListenError } from './stt'
 
 class FakeRecognition {
   static last: FakeRecognition | null = null
@@ -122,21 +122,6 @@ describe('listen options', () => {
     expect(FakeRecognition.last?.lang).toBe('')
     FakeRecognition.last!.onend?.()
     expect(onEnd).toHaveBeenCalledWith('silent-end', expect.stringMatching(/gum skip/))
-  })
-})
-
-describe('probeAvailability', () => {
-  it('reports the browser answer for cloud and on-device recognition', async () => {
-    const available = vi.fn(async (o: { processLocally?: boolean }) => (o.processLocally ? 'downloadable' : 'available'))
-    w.SpeechRecognition = Object.assign(class extends FakeRecognition {}, { available })
-    const text = await probeAvailability('ko-KR')
-    expect(available).toHaveBeenCalledWith({ langs: ['ko-KR'], processLocally: false })
-    expect(text).toMatch(/available/)
-    expect(text).toMatch(/downloadable/)
-  })
-  it('says so when the browser has no available()', async () => {
-    w.SpeechRecognition = FakeRecognition
-    expect(await probeAvailability('ko-KR')).toMatch(/없음/)
   })
 })
 

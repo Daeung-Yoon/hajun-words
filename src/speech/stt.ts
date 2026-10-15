@@ -20,10 +20,7 @@ interface RecognitionLike {
   stop(): void
   abort(): void
 }
-type RecognitionCtor = (new () => RecognitionLike) & {
-  /** Chrome 139+: 이 언어를 클라우드/기기 안에서 인식할 수 있는지. */
-  available?: (o: { langs: string[]; processLocally?: boolean }) => Promise<string>
-}
+type RecognitionCtor = new () => RecognitionLike
 export interface RecognitionEventLike {
   results: ArrayLike<{ 0: { transcript: string }; isFinal?: boolean }>
 }
@@ -43,19 +40,6 @@ function ctor(): RecognitionCtor | null {
 
 export function canListen(): boolean {
   return ctor() !== null
-}
-
-/** 브라우저가 이 언어를 인식할 수 있다고 하는지(클라우드·기기 안 각각). 구형 브라우저면 "없음". */
-export async function probeAvailability(lang: string): Promise<string> {
-  const C = ctor()
-  if (!C) return '음성 인식 없음'
-  const available = C.available
-  if (typeof available !== 'function') return 'available() 없음(Chrome 139 미만)'
-  const ask = async (processLocally: boolean) => {
-    try { return await available.call(C, { langs: [lang], processLocally }) } catch (e) { return `오류 ${(e as Error)?.name ?? e}` }
-  }
-  const [cloud, local] = await Promise.all([ask(false), ask(true)])
-  return `${lang} 클라우드 ${cloud} · 기기 안 ${local}`
 }
 
 export interface ListenOptions {

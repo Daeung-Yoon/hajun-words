@@ -68,9 +68,4 @@ describe('Home', () => {
     renderHome({ status: 'error', error: 'banks/wordmaster.json: 문제' })
     expect(screen.getByText(/아빠에게 알려주세요/)).toBeInTheDocument()
   })
-
-  it('links to the hidden mic test page', () => {
-    renderHome({})
-    expect(screen.getByRole('link', { name: '마이크 테스트' })).toHaveAttribute('href', '/mic-test')
-  })
 })

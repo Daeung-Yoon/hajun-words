@@ -90,7 +90,6 @@ export default function Home() {
           </Link>
         ))}
       </div>
-      <p className="muted center" style={{ marginTop: 24 }}><Link to="/mic-test">마이크 테스트</Link></p>
     </main>
   )
 }
